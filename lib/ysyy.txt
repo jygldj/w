@@ -1,0 +1,49 @@
+{
+    "classes": [
+        {
+            "type_name": "养生绝版10首之一二",
+            "type_id": "BV18N4y1f7dJ"
+        },
+        {
+            "type_name": "养生绝版10首之三四",
+            "type_id": "BV1G34y1V7Z7"
+        },
+        {
+            "type_name": "养生绝版10首之五六",
+            "type_id": "BV1QKsoeaERM"
+        },
+       {
+            "type_name": "养生绝版10首之七八",
+            "type_id": "BV1amsoeeENw"
+        },
+        {
+            "type_name": "养生绝版10首之九十",
+            "type_id": "BV1VrxKe8Ezi"
+        },                                                 
+        {
+            "type_name": "古曲5首合集",
+            "type_id": "BV1Lm4y1N7n2"
+        },
+        {
+            "type_name": "《琵琶语》",
+            "type_id": "BV1Vh4y1w7aX"
+        },
+        {
+            "type_name": "《云水禅心》",
+            "type_id": "BV1Kj411U74n"
+        }
+
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+
+

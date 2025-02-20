@@ -1,0 +1,32 @@
+{
+    "classes": [
+       {
+            "type_name": "八段锦",
+            "type_id": "BV1xM411C71b"
+        },
+        {
+            "type_name": "五音对应关系",
+            "type_id": "BV1cX4y1J7Gg"
+        },
+        {
+            "type_name": "木音《姑苏行》",
+            "type_id": "BV1az4y1x7Db"
+        },
+        {
+            "type_name": "火音《紫竹调》",
+            "type_id": "BV1Tu4y127Ps"
+        },
+        {
+            "type_name": "土音《春江花月夜》",
+            "type_id": "BV1cu411G755"
+        },
+        {
+            "type_name": "金音《将军令》",
+            "type_id": "BV1Y14y1z7Uh"
+        },
+        {
+            "type_name": "水音《汉宫秋月》",
+            "type_id": "BV1ec411w7ow"
+        }
+    ]
+}
