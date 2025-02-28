@@ -1479,7 +1479,7 @@
     {
       "name": "嘉乐直播",
       "type": 0,
-      "url": "./lib/feiyang.json",
+      "url": "https://6948.kstore.space/5号.txt",
       "ua": "okhttp/4.1.0",
       "epg": "https://epg.v1.mk/fy.xml",
       "logo": "https://gongdian.top/logo/tv/{name}.png",
@@ -1487,14 +1487,6 @@
         "type": "append",
         "source": "?livemode=4&starttime=${(b)yyyyMMdd'T'HHmm}00.00Z&endtime=${(e)yyyyMMdd'T'HHmm}00.00Z"
       }
-    },
-    {
-      "name": "咪咕电视直播",
-      "type": 0,
-      "url": "./lib/migu.txt",
-      "ua": "okhttp/4.1.0",
-      "epg": "https://epg.v1.mk/fy.xml",
-      "logo": "http://127.0.0.1:10079/p/0/proxy/https://epg.112114.xyz/logo/{name}.png"
     },
     {
       "name": "4号楼",
