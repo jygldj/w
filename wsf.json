@@ -1479,7 +1479,7 @@
     {
       "name": "5号",
       "type": 0,
-      "url": "https://6948.kstore.space/5号.txt",
+      "url": "./lib/feiyang.json",
       "ua": "okhttp/4.1.0",
       "epg": "https://epg.v1.mk/fy.xml",
       "logo": "https://gongdian.top/logo/tv/{name}.png",
