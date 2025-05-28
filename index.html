@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的文学库</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <script>
+        async function loadFromGitHub() {
+            const token = localStorage.getItem('githubToken'); 
+            const response = await fetch(
+                'https://api.github.com/repos/ 您的账号/my-poetry/contents/articles',
+                {
+                    headers: token ? {'Authorization': 'token ' + token} : {}
+                }
+            );
+            
+            const files = await response.json(); 
+            const container = document.getElementById("article-list"); 
+            
+            files.forEach(async  file => {
+                const res = await fetch(file.download_url); 
+                const article = await res.json(); 
+                container.innerHTML  += `
+                    <div class="article">
+                        <h2>${article.title}</h2> 
+                        <small>${article.category}</small> 
+                        <pre>${article.content}</pre> 
+                    </div>
+                `;
+            });
+        }
+    </script>
+</head>
+<body onload="loadFromGitHub()">
+    <!-- 保持原有展示结构 -->
+    <div id="article-list"></div>
+    <a href="submit.html"  class="submit-btn">投稿新作</a>
+</body>
+</html>
