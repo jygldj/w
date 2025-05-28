@@ -1,94 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>ÎÒµÄÎÄÑ§¿â</title>
-    <link rel="stylesheet" href="styles.css">  
-    <script>
-        async function loadArticles() {
-            try {
-                const response = await fetch(
-                    'https://raw.githubusercontent.com/jygldj/w/master/articles.json' 
-                );
-                
-                if (!response.ok)  throw new Error('¼ÓÔØÊ§°Ü');
-                
-                const articles = await response.json(); 
-                const container = document.getElementById("article-list"); 
-                const currentCategory = localStorage.getItem('currentCategory')  || 'poetry';
-                
-                // Çå¿ÕÈİÆ÷ 
-                container.innerHTML  = '';
-                
-                // ¹ıÂË²¢äÖÈ¾ÎÄÕÂ 
-                articles 
-                    .filter(article => article.category  === currentCategory)
-                    .forEach((article, index) => {
-                        container.innerHTML  += `
-                            <div class="article-item">
-                                <span class="article-order">${index + 1}</span>
-                                <a href="#" onclick="loadArticleContent('${article.title}',  '${article.content.replace(/'/g,  "\\'")}')">
-                                    ${article.title} 
-                                </a>
-                            </div>
-                        `;
-                    });
-                
-                // ¸üĞÂ·ÖÀà±êÌâ 
-                document.getElementById("category-title").textContent  = 
-                    { poetry: 'Ê«´Ê', prose: 'É¢ÎÄ', essays: 'ÔÓ¼Ç' }[currentCategory];
-                
-            } catch (error) {
-                console.error(' ¼ÓÔØ´íÎó:', error);
-                alert('¼ÓÔØÎÄÕÂÊ§°Ü£¬Çë¼ì²éÍøÂç»òÅäÖÃ');
-            }
-        }
- 
-        function loadArticleContent(title, content) {
-            document.getElementById("article-content").innerHTML  = `
-                <h2>${title}</h2>
-                <pre>${content}</pre>
-            `;
-        }
- 
-        // ·ÖÀàÇĞ»»Âß¼­ 
-        document.addEventListener('DOMContentLoaded',  () => {
-            document.querySelectorAll('.top-nav  a[data-category]').forEach(link => {
-                link.addEventListener('click',  (e) => {
-                    e.preventDefault(); 
-                    localStorage.setItem('currentCategory',  link.dataset.category); 
-                    loadArticles();
-                });
-            });
-            
-            loadArticles(); // ³õÊ¼¼ÓÔØ 
-        });
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ä¸ªäººæ–‡å­¦ç½‘ç«™</title>
+    <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
+    <!-- é¡¶éƒ¨å¯¼èˆªæ  -->
     <nav class="top-nav">
         <ul>
-            <li><a href="#" data-category="poetry">Ê«´Ê</a></li>
-            <li><a href="#" data-category="prose">É¢ÎÄ</a></li>
-            <li><a href="#" data-category="essays">ÔÓ¼Ç</a></li>
-            <li><a href="jianjie.html"> ¼ò½é</a></li>
-            <li><a href="submit.html"> Í¶¸å</a></li>
+            <li><a href="#" data-category="poetry">è¯—è¯</a></li>
+            <li><a href="#" data-category="prose">æ•£æ–‡</a></li>
+            <li><a href="#" data-category="essays">æ‚è®°</a></li>
+            <li><a href="jianjie.html"> ç®€ä»‹</a></li>
+            <li><a href="submit.html"> æŠ•ç¨¿</a></li>
         </ul>
     </nav>
  
+    <!-- ä¸»ä½“å†…å®¹åŒº -->
     <div class="container">
+        <!-- å·¦ä¾§ç›®å½• -->
         <aside class="sidebar">
-            <h2 id="category-title">Ê«´Ê</h2>
+            <h2 id="category-title">è¯—è¯</h2>
             <ul id="article-list">
-                <!-- ¶¯Ì¬Éú³ÉÎÄÕÂÁĞ±í -->
+                <!-- åŠ¨æ€ç”Ÿæˆæ–‡ç« åˆ—è¡¨ -->
             </ul>
-            <a href="submit.html"  class="submit-btn">Í¶¸åĞÂ×÷</a>
         </aside>
  
+        <!-- å³ä¾§ä¸»å†…å®¹ -->
         <main class="content">
             <article id="article-content">
-                <!-- ¶¯Ì¬¼ÓÔØÎÄÕÂÄÚÈİ -->
+                <!-- åŠ¨æ€åŠ è½½æ–‡ç« å†…å®¹ -->
             </article>
         </main>
     </div>
+ 
+    <script src="script.js"></script> 
 </body>
 </html>
