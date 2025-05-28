@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>æˆ‘çš„æ–‡å­¦åº“</title>
+    <title>ÎÒµÄÎÄÑ§¿â</title>
     <link rel="stylesheet" href="styles.css"> 
     <script>
 async function loadArticles() {
@@ -15,7 +15,7 @@ async function loadArticles() {
             }
         );
         
-        if(!response.ok)  throw new Error('åŠ è½½å¤±è´¥');
+        if(!response.ok)  throw new Error('¼ÓÔØÊ§°Ü');
         
         const articles = await response.json(); 
         const container = document.getElementById("article-list"); 
@@ -30,15 +30,43 @@ async function loadArticles() {
             `;
         });
     } catch (error) {
-        console.error(' åŠ è½½é”™è¯¯:', error);
-        alert('åŠ è½½æ–‡ç« å¤±è´¥ï¼Œè¯·æ£€æŸ¥ç½‘ç»œæˆ–é…ç½®');
+        console.error(' ¼ÓÔØ´íÎó:', error);
+        alert('¼ÓÔØÎÄÕÂÊ§°Ü£¬Çë¼ì²éÍøÂç»òÅäÖÃ');
     }
 }
     </script>
 </head>
 <body onload="loadFromGitHub()">
-    <!-- ä¿æŒåŸæœ‰å±•ç¤ºç»“æ„ -->
+        <nav class="top-nav">
+        <ul>
+            <li><a href="#" data-category="poetry">Ê«´Ê</a></li>
+            <li><a href="#" data-category="prose">É¢ÎÄ</a></li>
+            <li><a href="#" data-category="essays">ÔÓ¼Ç</a></li>
+            <li><a href="jianjie.html"> ¼ò½é</a></li>
+            <li><a href="submit.html"> Í¶¸å</a></li>
+        </ul>
+    </nav>
+ 
+    <!-- Ö÷ÌåÄÚÈİÇø -->
+    <div class="container">
+        <!-- ×ó²àÄ¿Â¼ -->
+        <aside class="sidebar">
+            <h2 id="category-title">Ê«´Ê</h2>
+            <ul id="article-list">
+                <!-- ¶¯Ì¬Éú³ÉÎÄÕÂÁĞ±í -->
+            </ul>
+        </aside>
+ 
+        <!-- ÓÒ²àÖ÷ÄÚÈİ -->
+        <main class="content">
+            <article id="article-content">
+                <!-- ¶¯Ì¬¼ÓÔØÎÄÕÂÄÚÈİ -->
+            </article>
+        </main>
+    </div>
+ 
+    <script src="script.js"></script> 
     <div id="article-list"></div>
-    <a href="submit.html"  class="submit-btn">æŠ•ç¨¿æ–°ä½œ</a>
+    <a href="submit.html"  class="submit-btn">Í¶¸åĞÂ×÷</a>
 </body>
 </html>
