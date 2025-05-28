@@ -2,48 +2,57 @@
 <html>
 <head>
     <title>投稿新作</title>
-    <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="styles.css">  
     <script>
-        async function saveToGitHub() {
+        async function submitArticle(event) {
+            event.preventDefault(); 
+            
             const title = document.getElementById("title").value; 
             const content = document.getElementById("content").value; 
             const category = document.getElementById("category").value; 
             
-            // 获取GitHub Token 
-            const token = localStorage.getItem('githubToken')  || 
-                          prompt('请输入GitHub Token:');
-            localStorage.setItem('githubToken',  token);
- 
-            // 发送数据到GitHub 
-            const response = await fetch(
-                'https://gh-proxy.com/https://raw.githubusercontent.com/jygldj/w/master/articles.json' + 
-                Date.now()  + '.json',
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'token ' + token,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        message: 'Add new article',
-                        content: btoa(unescape(encodeURIComponent(
-                            JSON.stringify({title,  content, category})
-                        )))
-                    })
+            try {
+                // 1. 获取当前 articles.json  数据 
+                const getResponse = await fetch(
+                    'https://api.github.com/repos/jygldj/w/contents/articles.json' 
+                );
+                const getData = await getResponse.json(); 
+                const currentContent = JSON.parse(atob(getData.content)); 
+                
+                // 2. 添加新文章 
+                currentContent.push({  title, content, category });
+                
+                // 3. 提交更新 
+                const putResponse = await fetch(
+                    'https://api.github.com/repos/jygldj/w/contents/articles.json', 
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': 'token ' + prompt('请输入GitHub Token:'),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ 
+                            message: 'Add new article: ' + title,
+                            content: btoa(unescape(encodeURIComponent(JSON.stringify(currentContent)))), 
+                            sha: getData.sha  
+                        })
+                    }
+                );
+                
+                if (putResponse.ok)  {
+                    alert('投稿成功！');
+                    location.href  = 'index.html'; 
+                } else {
+                    throw new Error('提交失败');
                 }
-            );
-            
-            if(response.ok)  {
-                alert('投稿成功！已存储到GitHub');
-                location.href  = 'index.html'; 
-            } else {
-                alert('提交失败，请检查Token权限');
+            } catch (error) {
+                console.error(error); 
+                alert('提交失败，请检查Token权限或网络连接');
             }
         }
     </script>
 </head>
 <body>
-    <!-- 顶部导航栏 -->
     <nav class="top-nav">
         <ul>
             <li><a href="index.html"> 返回首页</a></li>
@@ -52,10 +61,10 @@
  
     <div class="submit-container">
         <h1>作品投稿</h1>
-        <form id="submission-form">
+        <form id="submission-form" onsubmit="submitArticle(event)">
             <div class="form-group">
                 <label for="category">作品类别:</label>
-                <select id="category" name="category" required>
+                <select id="category" required>
                     <option value="poetry">诗词</option>
                     <option value="prose">散文</option>
                     <option value="essays">杂记</option>
@@ -64,24 +73,16 @@
             
             <div class="form-group">
                 <label for="title">题目:</label>
-                <input type="text" id="title" name="title" required>
+                <input type="text" id="title" required>
             </div>
             
             <div class="form-group">
                 <label for="content">正文:</label>
-                <textarea id="content" name="content" rows="15" required></textarea>
-                <p>或上传文件: <input type="file" id="file-upload" accept=".txt,.doc,.docx"></p>
-            </div>
-            
-            <div class="form-group">
-                <label for="submit-date">提交时间:</label>
-                <input type="datetime-local" id="submit-date" name="submit-date" required>
+                <textarea id="content" rows="15" required></textarea>
             </div>
             
             <button type="submit" class="submit-btn">提交作品</button>
-    <form onsubmit="saveToGitHub(); return false;">
-    <script src="script.js"></script> 
-    </form>
-
+        </form>
+    </div>
 </body>
 </html>

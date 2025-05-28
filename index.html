@@ -2,42 +2,70 @@
 <html>
 <head>
     <title>我的文学库</title>
-    <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="styles.css">  
     <script>
-async function loadArticles() {
-    try {
-        const response = await fetch(
-            'https://gh-proxy.com/https://raw.githubusercontent.com/jygldj/w/master/articles.json', 
-            {
-                headers: {
-                    'Accept': 'application/vnd.github.v3+json' 
-                }
+        async function loadArticles() {
+            try {
+                const response = await fetch(
+                    'https://raw.githubusercontent.com/jygldj/w/master/articles.json' 
+                );
+                
+                if (!response.ok)  throw new Error('加载失败');
+                
+                const articles = await response.json(); 
+                const container = document.getElementById("article-list"); 
+                const currentCategory = localStorage.getItem('currentCategory')  || 'poetry';
+                
+                // 清空容器 
+                container.innerHTML  = '';
+                
+                // 过滤并渲染文章 
+                articles 
+                    .filter(article => article.category  === currentCategory)
+                    .forEach((article, index) => {
+                        container.innerHTML  += `
+                            <div class="article-item">
+                                <span class="article-order">${index + 1}</span>
+                                <a href="#" onclick="loadArticleContent('${article.title}',  '${article.content.replace(/'/g,  "\\'")}')">
+                                    ${article.title} 
+                                </a>
+                            </div>
+                        `;
+                    });
+                
+                // 更新分类标题 
+                document.getElementById("category-title").textContent  = 
+                    { poetry: '诗词', prose: '散文', essays: '杂记' }[currentCategory];
+                
+            } catch (error) {
+                console.error(' 加载错误:', error);
+                alert('加载文章失败，请检查网络或配置');
             }
-        );
-        
-        if(!response.ok)  throw new Error('加载失败');
-        
-        const articles = await response.json(); 
-        const container = document.getElementById("article-list"); 
-        
-        articles.forEach(article  => {
-            container.innerHTML  += `
-                <div class="article">
-                    <h2>${article.title}</h2> 
-                    <small>${article.category}</small> 
-                    <pre>${article.content}</pre> 
-                </div>
+        }
+ 
+        function loadArticleContent(title, content) {
+            document.getElementById("article-content").innerHTML  = `
+                <h2>${title}</h2>
+                <pre>${content}</pre>
             `;
+        }
+ 
+        // 分类切换逻辑 
+        document.addEventListener('DOMContentLoaded',  () => {
+            document.querySelectorAll('.top-nav  a[data-category]').forEach(link => {
+                link.addEventListener('click',  (e) => {
+                    e.preventDefault(); 
+                    localStorage.setItem('currentCategory',  link.dataset.category); 
+                    loadArticles();
+                });
+            });
+            
+            loadArticles(); // 初始加载 
         });
-    } catch (error) {
-        console.error(' 加载错误:', error);
-        alert('加载文章失败，请检查网络或配置');
-    }
-}
     </script>
 </head>
-<body onload="loadFromGitHub()">
-        <nav class="top-nav">
+<body>
+    <nav class="top-nav">
         <ul>
             <li><a href="#" data-category="poetry">诗词</a></li>
             <li><a href="#" data-category="prose">散文</a></li>
@@ -47,26 +75,20 @@ async function loadArticles() {
         </ul>
     </nav>
  
-    <!-- 主体内容区 -->
     <div class="container">
-        <!-- 左侧目录 -->
         <aside class="sidebar">
             <h2 id="category-title">诗词</h2>
             <ul id="article-list">
                 <!-- 动态生成文章列表 -->
             </ul>
+            <a href="submit.html"  class="submit-btn">投稿新作</a>
         </aside>
  
-        <!-- 右侧主内容 -->
         <main class="content">
             <article id="article-content">
                 <!-- 动态加载文章内容 -->
             </article>
         </main>
     </div>
- 
-    <script src="script.js"></script> 
-    <div id="article-list"></div>
-    <a href="submit.html"  class="submit-btn">投稿新作</a>
 </body>
 </html>
