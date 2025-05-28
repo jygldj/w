@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ÎÒµÄÎÄÑ§¿â</title>
+    <title>æˆ‘çš„æ–‡å­¦åº“</title>
     <link rel="stylesheet" href="styles.css"> 
     <script>
-        async function loadFromGitHub() {
-            const token = localStorage.getItem('githubToken'); 
-            const response = await fetch(
-                'https://api.github.com/repos/ ÄúµÄÕËºÅ/my-poetry/contents/articles',
-                {
-                    headers: token ? {'Authorization': 'token ' + token} : {}
+async function loadArticles() {
+    try {
+        const response = await fetch(
+            'https://gh-proxy.com/https://raw.githubusercontent.com/jygldj/w/master/articles.json', 
+            {
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json' 
                 }
-            );
-            
-            const files = await response.json(); 
-            const container = document.getElementById("article-list"); 
-            
-            files.forEach(async  file => {
-                const res = await fetch(file.download_url); 
-                const article = await res.json(); 
-                container.innerHTML  += `
-                    <div class="article">
-                        <h2>${article.title}</h2> 
-                        <small>${article.category}</small> 
-                        <pre>${article.content}</pre> 
-                    </div>
-                `;
-            });
-        }
+            }
+        );
+        
+        if(!response.ok)  throw new Error('åŠ è½½å¤±è´¥');
+        
+        const articles = await response.json(); 
+        const container = document.getElementById("article-list"); 
+        
+        articles.forEach(article  => {
+            container.innerHTML  += `
+                <div class="article">
+                    <h2>${article.title}</h2> 
+                    <small>${article.category}</small> 
+                    <pre>${article.content}</pre> 
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error(' åŠ è½½é”™è¯¯:', error);
+        alert('åŠ è½½æ–‡ç« å¤±è´¥ï¼Œè¯·æ£€æŸ¥ç½‘ç»œæˆ–é…ç½®');
+    }
+}
     </script>
 </head>
 <body onload="loadFromGitHub()">
-    <!-- ±£³ÖÔ­ÓĞÕ¹Ê¾½á¹¹ -->
+    <!-- ä¿æŒåŸæœ‰å±•ç¤ºç»“æ„ -->
     <div id="article-list"></div>
-    <a href="submit.html"  class="submit-btn">Í¶¸åĞÂ×÷</a>
+    <a href="submit.html"  class="submit-btn">æŠ•ç¨¿æ–°ä½œ</a>
 </body>
 </html>
