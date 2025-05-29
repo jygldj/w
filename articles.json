@@ -1,16 +1,33 @@
 {
   "poetry": [
     {
-      "title": "春晓",
-      "filename": "chunxiao.md", 
-      "date": "2023-03-21"
+      "title": "闹元宵",
+      "filename": "nyx.md", 
+      "date": "2025-05-30"
+    },
+    {
+      "title": "秋日游宛湖",
+      "filename": "qrywh.md", 
+      "date": "2025-05-30"
+    },
+    {
+      "title": "自得其乐颂",
+      "filename": "zdqls.md", 
+      "date": "2025-05-30"
+    }
+  ],
+  "essaye": [
+    {
+      "title": "工作安排",
+      "filename": "2003gzap.md", 
+      "date": "2025-05-30"
     }
   ],
   "prose": [
     {
-      "title": "荷塘月色",
-      "filename": "hetang.md",  
-      "date": "2023-06-15"
+      "title": "长廊序言",
+      "filename": "clxuy.md",  
+      "date": "2025-05-30"
     }
   ]
 }
