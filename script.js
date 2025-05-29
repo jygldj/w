@@ -33,7 +33,7 @@ async function loadCategory(category) {
             { poetry: '诗词集', prose: '散文集', essays: '杂记录' }[category];
         
         // 加载JSON数据
-        const response = await fetch('articles.json'); 
+        const response = await fetch('/w/articles.json'); 
         if (!response.ok)  throw new Error('网络响应不正常');
         const data = await response.json(); 
         
