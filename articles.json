@@ -1,12 +1,16 @@
-[
+{
+  "poetry": [
     {
-        "title": "静夜思",
-        "category": "poetry",
-        "content": "床前明月光，疑是地上霜。\n举头望明月，低头思故乡。"
-    },
-    {
-        "title": "春",
-        "category": "prose",
-        "content": "盼望着，盼望着，东风来了，春天的脚步近了..."
+      "title": "春晓",
+      "filename": "chunxiao.md", 
+      "date": "2023-03-21"
     }
-]
+  ],
+  "prose": [
+    {
+      "title": "荷塘月色",
+      "filename": "hetang.md",  
+      "date": "2023-06-15"
+    }
+  ]
+}
