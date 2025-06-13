@@ -24,6 +24,7 @@
             padding: 20px;
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
             position: fixed;
+            transition: all 0.3s;
         }
         
         .sidebar h2 {
@@ -127,34 +128,11 @@
             background: #5a3921;
         }
         
-        /* 文章导航 */
-        .article-nav {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px 0;
-            padding: 15px 0;
-            border-top: 1px dashed #cdaa7d;
-            border-bottom: 1px dashed #cdaa7d;
-        }
-        
-        .article-nav a {
-            color: #8b4513;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: all 0.3s;
-        }
-        
-        .article-nav a:hover {
-            background: #f0e6d2;
-            text-decoration: underline;
-        }
-        
         /* 文章内容 */
         .article-content {
             line-height: 1.8;
             font-size: 18px;
+            padding-bottom: 80px; /* 为悬浮按钮留出空间 */
         }
         
         .article-title {
@@ -198,6 +176,64 @@
             font-size: 1.2em;
         }
         
+        /* 悬浮导航按钮 */
+        .article-float-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background: rgba(248, 244, 233, 0.9);
+            border-top: 1px dashed #cdaa7d;
+            z-index: 90;
+            display: none;
+        }
+        
+        .article-float-nav a {
+            color: #8b4513;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #f0e6d2;
+            transition: all 0.3s;
+        }
+        
+        .article-float-nav a:hover {
+            background: #cdaa7d;
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* 页面导航样式 */
+        .page-navigation {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: #f0e6d2;
+            border-radius: 5px;
+        }
+        
+        .page-link {
+            margin: 0 10px;
+            padding: 5px 10px;
+            color: #5a3921;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background 0.3s;
+        }
+        
+        .page-link:hover {
+            background: #cdaa7d;
+            color: white;
+        }
+        
+        .page-link.active {
+            background: #8b4513;
+            color: white;
+        }
+        
         /* 移动端适配 */
         @media screen and (max-width: 768px) {
             body {
@@ -206,18 +242,69 @@
             .sidebar {
                 width: 100%;
                 height: auto;
-                position: static;
-                padding: 15px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                padding: 10px;
+                max-height: 50vh;
+                overflow-y: auto;
             }
             .content {
                 margin-left: 0;
-                padding: 20px;
+                padding: 15px;
             }
             .collection-header h1 {
                 font-size: 1.8em;
             }
             .search-bar input {
                 width: 70%;
+            }
+            
+            /* 标签页导航样式 */
+            .tab-nav {
+                display: flex;
+                justify-content: space-around;
+                border-bottom: 2px solid #cdaa7d;
+                margin-bottom: 15px;
+            }
+            .tab-nav button {
+                flex: 1;
+                padding: 10px;
+                background: transparent;
+                border: none;
+                color: #5a3921;
+                cursor: pointer;
+                font-family: "楷体", serif;
+                transition: all 0.3s;
+            }
+            .tab-nav button.active {
+                color: #8b4513;
+                border-bottom: 2px solid #8b4513;
+            }
+            .tab-content {
+                display: none;
+            }
+            .tab-content.active {
+                display: block;
+            }
+            
+            /* 显示移动端悬浮导航 */
+            .article-float-nav {
+                display: flex;
+            }
+            
+            /* 移动端导航样式优化 */
+            .page-navigation {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+            
+            .page-link {
+                margin: 0;
+                padding: 8px 12px;
+                font-size: 14px;
             }
         }
         
@@ -237,11 +324,11 @@
     <!-- 左侧目录 -->
     <aside class="sidebar">
         <div class="author-link">
-            <a href="jianjie.html"  style="display: block; text-align: center; padding: 10px; background: #8b4513; color: white; margin-bottom: 15px; border-radius: 5px;"> 
+            <a href="cknjianjie.html" style="display: block; text-align: center; padding: 10px; background: #8b4513; color: white; margin-bottom: 15px; border-radius: 5px;"> 
                 📝 关于作者版权 
             </a>
         </div>
-        <h2>📜 文章目录</h2>
+        
         <ul class="article-list" id="articleList">
             <!-- 动态生成目录 -->
         </ul>
@@ -251,36 +338,62 @@
     <main class="content" id="articleContent">
         <header class="collection-header">
             <h1 lang="zh">道玄文集</h1>
+            
+            <!-- 页面导航 -->
+            <nav class="page-navigation">
+                <a href="index.html" class="page-link">首页</a>
+                <a href="index2.html" class="page-link">第二页</a>
+                <a href="index3.html" class="page-link">第三页</a>
+            </nav>
+            
             <div role="search" class="search-bar">
                 <input type="search" id="searchInput" placeholder="输入关键词搜索..." aria-label="搜索文章">
                 <button onclick="searchArticles()">搜索</button>
             </div>
         </header>
         
-        <nav class="article-nav">
-            <a href="#" id="prevArticle">← 上一篇</a>
-            <a href="#" id="nextArticle">下一篇 →</a>
-        </nav>
+        <div class="tab-nav" style="display: none;">
+            <button class="tab-btn active" onclick="switchTab('catalog')">目录</button>
+            <button class="tab-btn" onclick="switchTab('article')">文章</button>
+        </div>
         
-        <article>
-            <h1 class="article-title" id="articleTitle">欢迎来到道玄文集</h1>
-            <div class="article-meta" id="articleMeta">
-                <span>请从左侧选择文章</span>
-            </div>
-            <div class="article-content" id="articleText">
-                <p>此处将显示您选择的文章内容...</p>
-            </div>
-        </article>
+        <div class="tab-content active" id="catalogTab">
+            <!-- 目录内容已在侧边栏显示 -->
+        </div>
         
-        <nav class="article-nav">
-            <a href="#" id="prevArticleBottom">← 上一篇</a>
-            <a href="#" id="nextArticleBottom">下一篇 →</a>
-        </nav>
+        <div class="tab-content" id="articleTab">
+            <nav class="article-nav" style="display: none;">
+                <a href="#" id="prevArticle">← 上一篇</a>
+                <a href="#" id="nextArticle">下一篇 →</a>
+            </nav>
+            
+            <article>
+                <h1 class="article-title" id="articleTitle">欢迎来到道玄文集</h1>
+                <div class="article-meta" id="articleMeta">
+                    <span>请从左侧选择文章</span>
+                </div>
+                <div class="article-content" id="articleText">
+                    <p>请等待加载...</p>
+                </div>
+            </article>
+            
+            <nav class="article-nav" style="display: none;">
+                <a href="#" id="prevArticleBottom">← 上一篇</a>
+                <a href="#" id="nextArticleBottom">下一篇 →</a>
+            </nav>
+        </div>
     </main>
+    
+    <!-- 悬浮导航 -->
+    <div class="article-float-nav">
+        <a href="#" id="mobilePrevArticle">← 上一篇</a>
+        <a href="#" id="mobileNextArticle">下一篇 →</a>
+    </div>
  
     <script>
         // 文章数据 
         const articles = [
+
     {
         "id": 1,
         "title": "《道玄疏》",
@@ -371,7 +484,22 @@
         "category": "词",
         "date": "乙巳年五月初五",
         "content": "<p>渔家傲・和端阳节（四）</p><p>惠山细雨莺语哝，<br>拈花湾畔见慈容。<br>廿载文章传古风。<br>德馨同，心香虔献胜香粽。</p><p>唐筑灯辉驱世虫，<br>蠡园烟水诗骨重。<br>铁马冰河铸文雄。<br>情永共，师门如日照千秋。</p>"
-    }
+    },
+{
+    "id": 14,
+    "title": "简朴思",
+    "category": "词",
+    "date": "乙巳年五月十八",
+    "content": "<p>菜根咬得滋味长,<br>布衣暖来菜饭香。<br>若问古今兴废事,<br>且看堂前燕绕梁。</p><p>释义:</p><p>一、生存哲学的双重维度<br>（1）物质与精神的辩证<br>“菜根咬得滋味长”化用《菜根谭》“咬得菜根，百事可做”，通过咀嚼粗粝菜根的意象，揭示物质匮乏与精神丰盈的辩证关系。菜根的苦涩滋味在时间维度上转化为绵长回甘，暗示苦难对人格的淬炼作用。<br>（2）简朴生活的审美升华<br>“布衣暖来菜饭香”构成触觉与嗅觉的通感修辞。粗布衣物的温暖与普通菜饭的香气，在感官体验中达成对简朴生活的审美重构，暗合陶渊明“环堵萧然，不蔽风日”的隐逸美学。</p><p>二、历史认知的解构视角<br>（1）宏大叙事的日常化消解<br>“若问古今兴废事”将历史学家的宏大命题，与“堂前燕绕梁”的日常意象形成戏剧性反差。通过否定传统历史叙事的权威性，构建起“以小见大”的认知范式。<br>（2）永恒与变迁的哲学观照<br>燕子绕梁的意象源自刘禹锡“旧时王谢堂前燕”的典故，但在此处被赋予新的时空维度。飞燕的年复一年与梁木的恒久存在，构成动态与静止的辩证，暗示历史兴衰不过是自然永恒中的短暂涟漪。</p><p>三、认知范式的转型路径<br>（1）从向外求索到向内观照<br>诗句完成从“问古今兴废”的外求姿态，到“看堂前燕”的内省视角的转换。这种认知路径的转变，暗合禅宗“平常心是道”的修行理念。<br>（2）时空压缩的诗意呈现<br>通过将千年兴废压缩为燕子绕梁的瞬间，实现历史纵深与当下体验的时空折叠。这种诗性思维突破线性时间观，构建起立体的认知维度。</p><p>四、现代性的启示价值<br>（1）消费主义的解毒剂<br>在物质丰裕时代，“菜根滋味”的提出具有反消费主义的警示意义。强调精神满足对物质欲望的超越，呼应当代极简主义的生活哲学。<br>（2）历史焦虑的缓解之道<br>面对信息爆炸时代的“历史焦虑症”，诗句提供化解之道：将目光从宏大的历史叙事转向生活现场的细微观察，于平凡处见真章。</p><p>结语：<br>这四句诗构建起完整的认知体系：以简朴生活为根基，通过日常观察解构历史迷思，最终抵达超越时空的哲学境界。其价值不仅在于历史观的革新，更在于为现代人提供了一种诗意栖居的可能性——在菜根的苦涩与燕子的呢喃中，听见永恒的回响。</p>"
+},
+{
+    "id": 15,
+    "title": "简朴思",
+    "category": "散文",
+    "date": "乙巳年五月十八",
+    "content": "<p>简朴思</p><p>——在粗粝中触摸永恒</p><p>清晨推窗，竹影在青砖上写狂草。檐角垂落的蛛网兜住半片槐花，风过时，花与网皆成水墨。这便是简朴的启蒙课——天地从不以金箔裹石，却让苔痕在墙根绣出年轮。</p><p>陶渊明采菊东篱时，衣襟沾满草籽与晨露，却比任何锦袍都接近永恒。他在《归去来兮辞》中写道：“悦亲戚之情话，乐琴书以消忧”，何尝不是用最朴素的声色构筑精神堡垒？王维辋川别业的竹坞云房，实则是将自然裁剪成窗框里的画轴。那些被现代人斥为“破败”的残荷枯柳，在八大山人的笔下，化作“墨点无多泪点多”的绝响。</p><p>灶台上煨着陈年陶罐，腊肉与萝卜在蒸汽中达成和解。这让我想起苏轼在《菜羹赋》中自嘲：“何用和銮，而自煮此无盐之汤”。当现代人追逐分子料理的幻术时，粗陶碗里的荠菜豆腐羹，正以最原始的方式完成对味觉的启蒙。</p><p>袁枚《随园食单》记载“有味者使之无味”的烹饪哲学，恰似禅宗“平常心是道”的变奏。京都怀石料理将豆腐切成月牙状，配以松针熏制的鲣鱼花，看似精致，实则延续着“和敬清寂”的简素之道。而贵州侗寨的酸汤鱼，用木桶发酵出的酸味，比任何酱料都更接近大地的本味。</p><p>徽州老宅的天井承接四时风雨，雨水顺着瓦当滴落青石，日日年年刻写着《漱玉集》。这种“四水归堂”的格局，暗合《园冶》所言“虽由人作，宛自天开”的智慧。反观现代玻璃幕墙的冰冷森林，那些用LED灯光模拟的“星空顶”，终究照不亮灵魂的暗角。</p><p>日本安藤忠雄的“光之教堂”，用混凝土与十字光束完成对简朴的极致诠释。而苏州博物馆的片石假山，贝聿铭以米芾画意重构山水，在钢筋水泥间保留着“瘦皱漏透”的东方美学密码。真正的建筑大师，都懂得在留白处安放云影。</p><p>祖父的铜壶总在寅时敲响更漏，壶嘴飘出的茶烟，与北斗的斗柄共绘时间的螺旋。这种农耕文明的时间刻度，比手机日历更接近生命的本相。陶弘景在《答谢中书书》中描绘的“晓雾将歇，猿鸟乱鸣”，实则是用二十四节气编织的时光锦缎。</p><p>当都市人困在“碎片化”“即时性”的牢笼里，云南哈尼族的“十月太阳历”仍在梯田上流转。他们用不同颜色的糯稻绘制大地画，让农耕成为最隆重的时光祭祀。这种对季节的虔诚，比任何智能手环都更能丈量生命的质地。</p><p>东京表参道的极简主义橱窗里，一盏清水与枯枝构成“侘寂”的美学标本。这让我想起老子“大巧若拙”的箴言——当消费主义将欲望包装成必需品时，真正的奢侈恰是放下。</p><p>景德镇陶艺家李见深用五年时间复原宋代影青瓷，却故意保留窑变的瑕疵。这些“不完美”的器物，反而成为当代人对抗异化的图腾。就像《菜根谭》所言：“风来疏竹，风过而竹不留声”，简朴不是苦行，而是让灵魂在物的缝隙中自由呼吸。</p><p>暮色漫过窗棂时，我看见陶罐里的野菊悄然绽放。那些被现代性碾碎的时光，正在粗陶的肌理间重新凝结成琥珀。或许真正的奢华，不过是学会在菜根的苦涩里，尝出岁月的回甘。</p>"
+}
+
         ];
  
         // 当前文章索引 
@@ -399,15 +527,132 @@
                 searchTimer = setTimeout(searchArticles, 300);
             });
             
-            // 键盘导航 
-            document.addEventListener('keydown',  (e) => {
-                if (e.key  === 'ArrowLeft' && currentArticleIndex > 0) {
-                    loadArticle(currentArticleIndex - 1);
-                } else if (e.key  === 'ArrowRight' && currentArticleIndex < articles.length  - 1) {
-                    loadArticle(currentArticleIndex + 1);
+            // 初始化折叠目录
+            initFoldableCatalog();
+            
+            // 初始化移动端标签页
+            initMobileTabs();
+            
+            // 添加滚动监听，滑动文章时自动收回目录
+            window.addEventListener('scroll', function() {
+                const isMobile = window.innerWidth <= 768;
+                const articleList = document.getElementById('articleList');
+                
+                if (isMobile && articleList.style.display === 'block') {
+                    articleList.style.display = 'none';
+                    document.getElementById('fold-icon').textContent = '▶';
+                }
+            });
+            
+            // 高亮当前页面导航链接
+            const currentPage = window.location.pathname.split('/').pop();
+            const pageLinks = document.querySelectorAll('.page-link');
+            
+            pageLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
                 }
             });
         });
+        
+        // 初始化折叠目录
+        function initFoldableCatalog() {
+            const sidebar = document.querySelector('.sidebar');
+            const oldTitle = sidebar.querySelector('h2');
+            if (oldTitle) oldTitle.remove(); // 移除原有标题
+            
+            const catalogHeader = document.createElement('div');
+            catalogHeader.className = 'catalog-header';
+            catalogHeader.innerHTML = `
+                <h2 style="margin-top: 0; cursor: pointer;" onclick="toggleCatalog()">
+                    📜 文章目录 <span id="fold-icon">▼</span>
+                </h2>
+            `;
+            
+            const articleList = document.getElementById('articleList');
+            articleList.parentElement.insertBefore(catalogHeader, articleList);
+            
+            // 当文章数超过5篇时自动折叠
+            if (articles.length > 5) { 
+                articleList.style.display = 'none';
+                document.getElementById('fold-icon').textContent = '▶';
+            }
+        }
+        
+        // 切换目录折叠状态
+        function toggleCatalog() {
+            const articleList = document.getElementById('articleList');
+            const foldIcon = document.getElementById('fold-icon');
+            
+            if (articleList.style.display === 'none') {
+                articleList.style.display = 'block';
+                foldIcon.textContent = '▼';
+                
+                // 在移动端调整目录高度
+                if (window.innerWidth <= 768) {
+                    const sidebar = document.querySelector('.sidebar');
+                    sidebar.style.maxHeight = 'auto';
+                }
+            } else {
+                articleList.style.display = 'none';
+                foldIcon.textContent = '▶';
+                
+                // 在移动端调整目录高度
+                if (window.innerWidth <= 768) {
+                    const sidebar = document.querySelector('.sidebar');
+                    sidebar.style.maxHeight = '0';
+                }
+            }
+        }
+        
+        // 修改移动端标签页初始化函数
+        function initMobileTabs() {
+            const isMobile = window.innerWidth <= 768;
+            const tabNav = document.querySelector('.tab-nav');
+            const catalogTab = document.getElementById('catalogTab');
+            const articleTab = document.getElementById('articleTab');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (isMobile) {
+                tabNav.style.display = 'flex';
+                sidebar.style.display = 'block';
+                catalogTab.style.display = 'block';
+                
+                // 移动端目录点击事件
+                document.querySelectorAll('.article-list a').forEach(link => {
+                    link.onclick = function(e) {
+                        e.preventDefault();
+                        loadArticle(Array.from(document.querySelectorAll('.article-list a')).indexOf(this));
+                        switchTab('article');
+                    };
+                });
+                
+                // 确保目录折叠功能正常
+                const articleList = document.getElementById('articleList');
+                if (articles.length > 5) {
+                    articleList.style.display = 'none';
+                    document.getElementById('fold-icon').textContent = '▶';
+                } else {
+                    articleList.style.display = 'block';
+                    document.getElementById('fold-icon').textContent = '▼';
+                }
+            }
+        }
+        
+        // 切换标签页
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            
+            document.querySelector(`.tab-btn[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId + 'Tab').classList.add('active');
+            
+            // 滚动到文章内容区域
+            if (tabId === 'article') {
+                const articleContent = document.getElementById('articleContent');
+                articleContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
         
         // 渲染目录 
         function renderArticleList() {
@@ -440,19 +685,23 @@
                 document.getElementById('articleText').innerHTML  = article.content;  
                 
                 updateNavButtons();
-                window.scrollTo(0,  0);
                 
                 // 更新目录高亮 
                 document.querySelectorAll('.article-list  a').forEach((a, i) => {
                     a.classList.toggle('active',  i === index);
                 });
+                
+                // 显示文章标签页（移动端）
+                if (window.innerWidth <= 768) {
+                    switchTab('article');
+                }
             }, 100);
         }
         
         // 更新导航按钮 
         function updateNavButtons() {
-            const prevButtons = document.querySelectorAll('#prevArticle,  #prevArticleBottom');
-            const nextButtons = document.querySelectorAll('#nextArticle,  #nextArticleBottom');
+            const prevButtons = document.querySelectorAll('#prevArticle,  #prevArticleBottom, #mobilePrevArticle');
+            const nextButtons = document.querySelectorAll('#nextArticle,  #nextArticleBottom, #mobileNextArticle');
             
             // 上一篇按钮 
             prevButtons.forEach(btn  => {
@@ -464,6 +713,7 @@
                     };
                 } else {
                     btn.style.visibility  = 'hidden';
+                    btn.onclick  = null;
                 }
             });
             
@@ -477,6 +727,7 @@
                     };
                 } else {
                     btn.style.visibility  = 'hidden';
+                    btn.onclick  = null;
                 }
             });
         }
@@ -486,7 +737,8 @@
             const keyword = document.getElementById('searchInput').value.trim().toLowerCase();  
             const filtered = articles.filter(article  => 
                 article.title.toLowerCase().includes(keyword)  || 
-                article.content.toLowerCase().includes(keyword)  
+                article.content.toLowerCase().includes(keyword)  ||
+                article.category.toLowerCase().includes(keyword)
             );
             
             const listContainer = document.getElementById('articleList');  
@@ -499,19 +751,34 @@
                     </a>
                 </li>
             `).join('');
+            
+            // 如果搜索结果为空
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `
+                    <li style="text-align: center; padding: 15px; color: #8b4513;">
+                        未找到包含"${keyword}"的文章
+                    </li>
+                `;
+            }
         }
         
-        // 关键词高亮（安全版）
+        // 关键词高亮 
         function highlightKeyword(text, keyword) {
             if (!keyword) return text;
-            const div = document.createElement('div'); 
-            div.textContent  = text;
-            const escapedText = div.innerHTML; 
-            return escapedText.replace( 
-                new RegExp(keyword.replace(/[.*+?^${}() |[\]\\]/g, '\\$&'), 'gi'), 
-                match => `<span class="highlight">${match}</span>`
+            return text.replace(
+                new RegExp(`(${keyword})`, 'gi'),
+                '<span class="highlight">$1</span>'
             );
         }
+        
+        // 键盘导航 
+        document.addEventListener('keydown',  (e) => {
+            if (e.key  === 'ArrowLeft' && currentArticleIndex > 0) {
+                loadArticle(currentArticleIndex - 1);
+            } else if (e.key  === 'ArrowRight' && currentArticleIndex < articles.length  - 1) {
+                loadArticle(currentArticleIndex + 1);
+            }
+        });
     </script>
 </body>
 </html>
