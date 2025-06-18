@@ -35,6 +35,31 @@
             margin-top: 0;
         }
         
+        /* 筛选控件样式 */
+        .filter-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .filter-select {
+            width: 300px; /* 与搜索框宽度一致 */
+            padding: 8px;
+            border: 1px solid #cdaa7d;
+            border-radius: 3px;
+            background: white;
+            font-family: "楷体", serif;
+            font-size: 16px;
+            cursor: pointer;
+            color: #5a3921;
+        }
+        
+        /* 占位文本样式 */
+        .filter-select:placeholder-shown {
+            color: #999;
+            font-style: italic;
+        }
+        
         .article-list {
             list-style: none;
             padding: 0;
@@ -166,6 +191,27 @@
             background-color: #ffe0b2;
             padding: 0 3px;
             border-radius: 3px;
+        }
+        
+        /* 段落缩进 */
+        .paragraph-indent {
+            text-indent: 2em;
+        }
+        
+        /* 诗和词格式样式 */
+        .poem {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .poem-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .poem-content {
+            white-space: pre-line;
+            line-height: 2;
         }
         
         /* 加载指示 */
@@ -333,6 +379,17 @@
                 cursor: pointer;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             }
+            
+            /* 移动端筛选控件样式调整 */
+            .filter-container {
+                margin: 10px 0;
+            }
+            
+            .filter-select {
+                width: 70%;
+                padding: 6px;
+                font-size: 14px;
+            }
         }
         
         /* 打印样式 */
@@ -356,6 +413,18 @@
             </a>
         </div>
         
+        <h2>文章目录</h2>
+        
+        <div class="filter-container">
+            <select class="filter-select" id="categoryFilter" onchange="filterArticles()">
+                <option value="" disabled selected>文章分类：全部</option>
+                <option value="all">全部</option>
+                <option value="诗">诗</option>
+                <option value="词">词</option>
+                <option value="其它">其它</option>
+            </select>
+        </div>
+        
         <ul class="article-list" id="articleList">
             <!-- 动态生成目录 -->
         </ul>
@@ -370,6 +439,13 @@
     <main class="content" id="articleContent">
         <header class="collection-header">
             <h1 lang="zh">道玄文集</h1>
+            
+            <!-- 页面导航 -->
+            <nav class="page-navigation">
+                <a href="index.html" class="page-link">首页</a>
+                <a href="index2.html" class="page-link">第二页</a>
+                <a href="index3.html" class="page-link">第三页</a>
+            </nav>
             
             <div role="search" class="search-bar">
                 <input type="search" id="searchInput" placeholder="输入关键词搜索..." aria-label="搜索文章">
@@ -745,16 +821,16 @@
     {
         "id": 47,
         "title": "《母亲的米汤油馓子》",
-        "category": "记",
+        "category": "诗",
         "date": "癸卯年季春",
-        "content": "<p>卷一：食材转世录</p><p>米汤：</p><p>需选古浪黄渠水浇灌的粟，</p><p>颗粒要小如西夏文残碑的标点，</p><p>熬煮时——</p><p>火候是霍去病军灶的余温，</p><p>稠度按鸠摩罗什译经的节奏</p><p>油馓子：</p><p>母亲揉面时，</p><p>掌纹里会溢出《凉州词》的平仄；</p><p>油炸瞬间，</p><p>锅边泛起的气泡，</p><p>都是铜奔马踏飞的雪沫</p><p>卷二：食用秘籍</p><p>捧碗观想：</p><p>碗沿缺角处，</p><p>住着我五岁时磕破的牙印</p><p>馓子蘸汤：</p><p>酥脆与绵稠交锋时，</p><p>会听见：</p><p>“咔嚓——”</p><p>这是童年的门闩</p><p>被味觉撬开的动静</p><p>终极密意：</p><p>碗底最后一口，</p><p>务必留给</p><p>1977年冬天的自己</p><p>（那年离开老房子，</p><p>养了多年的白狗</p><p>送我们走了</p><p>好远</p><p>好远）</p><p>卷三：味觉舍利</p><p>母亲仙逝后，</p><p>我发现：</p><p>她留下的面盆，</p><p>仍自动生成七月十五的馓子</p><p>灶台裂缝里，</p><p>长出的不是霉斑，</p><p>而是微型河西走廊</p><p>（用放大镜可见：</p><p>祁连雪水正流过</p><p>发丝细的河床）</p><p>传世真言：</p><p>下次煮粥时，</p><p>要默诵：</p><p>“米是粟，</p><p>汤是血，</p><p>馓子是骨节，</p><p>母亲是佛。”</p>"
+        "content": "<p>卷一：食材转世录</p><p>米汤：</p><p>选古浪黄渠水浇灌的粟，</p><p>颗粒要小如西夏文残碑的标点，</p><p>熬煮时——</p><p>火候是霍去病军灶的余温，</p><p>稠度按鸠摩罗什译经的节奏</p><p>油馓子：</p><p>母亲揉面时，</p><p>掌纹里会溢出《凉州贤孝》的韵律；</p><p>油炸瞬间，</p><p>锅边泛起的气泡，</p><p>都是铜奔马踏飞的雪沫</p><p>卷二：食用秘籍</p><p>捧碗观想：</p><p>碗沿缺角处，</p><p>住着我五岁时磕破的牙印</p><p>馓子蘸汤：</p><p>酥脆与绵稠交锋时，</p><p>会听见：</p><p>“咔嚓——”</p><p>这是童年的门闩</p><p>被味觉撬开的动静</p><p>终极密意：</p><p>碗底最后一口，</p><p>务必留给</p><p>1977年冬天的自己</p><p>（那年离开老房子，</p><p>养了多年的白狗</p><p>送我们走了</p><p>好远</p><p>好远）</p><p>卷三：味觉舍利</p><p>母亲仙逝后，</p><p>我发现：</p><p>她留下的面盆，</p><p>仍自动生成七月十五的馓子</p><p>灶台裂缝里，</p><p>长出的不是霉斑，</p><p>而是微型河西走廊</p><p>（用放大镜可见：</p><p>祁连雪水正流过</p><p>发丝细的河床）</p><p>传世真言：</p><p>下次煮粥时，</p><p>要默诵：</p><p>“米是粟，</p><p>汤是血，</p><p>馓子是骨节，</p><p>母亲是佛。”</p>"
     },
     {
         "id": 48,
         "title": "《灶台菩萨本生经》",
-        "category": "记",
+        "category": "诗",
         "date": "乙巳年春节",
-        "content": "<p>---- 献给大姐</p><p>第一幕・苦行记</p><p>她揉面的手，</p><p>皴裂处嵌着：</p><p>1977年的糠皮</p><p>公社灶台的煤灰</p><p>夜半喂猪时沾的露水</p><p>可那掌心纹路，</p><p>偏偏长成</p><p>两株麦穗</p><p>——后来我才知道</p><p>那叫**“菩萨的掌纹田”**</p><p>第二幕・转法轮</p><p>两个儿子：</p><p>大儿是北凉石窟里</p><p>逃出来的飞天，</p><p>小儿乃铜奔马</p><p>失散的蹄铁。</p><p>当他们在城市扎根，</p><p>大姐的围裙口袋</p><p>开始自动吐出：</p><p>重点中学录取通知书（带馓子油渍）</p><p>孙子乳牙（包在《心经》废稿里）</p><p>第三幕・涅槃香</p><p>如今她坐在</p><p>嘉峪关的夕阳里拆毛线，</p><p>毛线团滚过地板时——</p><p>一个变成优秀工作者奖状</p><p>一个滚成全家福的相框</p><p>最神奇是那锅灶：</p><p>明明只煮小米粥，</p><p>飘出的香气</p><p>却让整栋楼的住户</p><p>集体梦见</p><p>河西走廊的麦浪</p>"
+        "content": "<p>---- 献给大姐</p><p>第一幕・苦行记</p><p>她揉面的手，</p><p>皴裂处嵌着：</p><p>1977年的糠皮</p><p>农场灶台的煤灰</p><p>夜半喂猪时沾的露水</p><p>可那掌心纹路，</p><p>偏偏长成</p><p>两株麦穗</p><p>——后来我才知道</p><p>那叫**“菩萨的掌纹田”**</p><p>第二幕・转法轮</p><p>两个儿子：</p><p>大儿是敦煌石窟里</p><p>逃出来的飞天，</p><p>小儿乃铜奔马</p><p>失散的蹄铁。</p><p>当他们在城市扎根，</p><p>大姐的围裙口袋</p><p>开始自动吐出：</p><p>大学录取通知书（带馓子油渍）</p><p>孙子乳牙（包在《心经》废稿里）</p><p>第三幕・涅槃香</p><p>如今她坐在</p><p>嘉峪关的夕阳里拆毛线，</p><p>毛线团滚过地板时——</p><p>一个变成优秀工作者奖状</p><p>一个滚成全家福的相框</p><p>最神奇是那锅灶：</p><p>明明只煮小米粥，</p><p>飘出的香气</p><p>却让整栋楼的住户</p><p>集体梦见</p><p>河西走廊的麦浪</p>"
     },
     {
         "id": 49,
@@ -791,9 +867,81 @@
         "date": "乙巳年五月十六",
         "content": "<p>大姐、大姐夫、妹妹、妹夫：</p><p>那日新疆的风太燥，</p><p>我的话比烈日更伤人。</p><p>争执时忘了——</p><p>你们的好，</p><p>我的倔，</p><p>本该是家人间最暖的依靠。</p><p>大姐急着回家，</p><p>是心疼小孙子盼归的眼神；</p><p>我们贪恋风景，</p><p>却忘了她操劳半生的疲惫。</p><p>方向盘上的分歧，</p><p>不该变成言语的刀。</p><p>大姐夫宽厚，</p><p>默默咽下委屈；</p><p>妹妹妹夫包容，</p><p>仍笑着打圆场。</p><p>而我，</p><p>只顾自己的执拗，</p><p>忘了你们的迁就。</p><p>回家后，</p><p>你们仍待我如初，</p><p>可我知道——</p><p>那句伤人的话，</p><p>像一粒沙，</p><p>硌在大姐心里。</p><p>今日，我郑重道歉：</p><p>对不起，我的冲动；</p><p>对不起，我的固执；</p><p>更对不起，</p><p>你们多年来的包容与爱。</p><p>愿我们——</p><p>仍如幼时那般，</p><p>围坐一桌，</p><p>吃大姐煮的面，</p><p>笑谈往事，</p><p>再无隔阂。</p><p>—— 愧疚的弟弟/哥哥 敬上</p><p>（词短情长，盼你们原谅。）</p>"
     },
+{
+  "id": 54,
+  "title": "《乙巳年祭母文》",
+  "category": "祭文",
+  "date": "乙巳年五月二十一日",
+  "content": "<p>呜呼吾母，遽然而死。</p><p>寿四十七，生有八子。</p><p>八子余七，大哥夭折。</p><p>大舅无子，六妹送舅。</p><p>七妹最怜，至今无信，</p><p>依稀记得，军侣收养。</p><p>大舅抱走六妹时，</p><p>母亲哭天嚎地，</p><p>蒙头睡在炕角三日不食。</p><p>军侣抱走七妹那日，</p><p>天降暴雨，至黄昏，</p><p>西边雨后彩虹，</p><p>母亲依旧哭天喊地，</p><p>悲痛欲绝，</p><p>窝在炕角三日不饮。</p><p>吾母呕血，实养五子。</p><p>一男四女，吾排第二。</p><p>育我兄妹，艰辛备历。</p><p>摧折作磨，因此遘疾。</p><p>中间万万，皆伤心史：</p><p>为谋生计，父亲离乡。</p><p>酒钢公司，参加工作。</p><p>育子重任，吾母独担。</p><p>村里王姓，本是同门。</p><p>相煎欺弱：寡母幼子，</p><p>分粮分菜，短斤少两。</p><p>出工计分，大姐最少，</p><p>受欺委屈，泪流常伴。</p><p>那日冬风，天昏地暗。</p><p>母亲抱恙，远村求医。</p><p>幼丁伴母，以免孤行。</p><p>踩过坑洼，趟过沟渠，</p><p>爬坡过坎，步履蹒跚</p><p>母养白狗，最为灵性，</p><p>一路跟随，护卫母幼。</p><p>到得医堂，医者仁心。</p><p>母付医资，尚缺五毛。</p><p>承诺下月，卖鸡补欠。</p><p>陈姓老医，慈善和蔼，</p><p>笑语安慰，不用补欠。</p><p>出得医堂，已是黄昏，</p><p>北风疾吼，沙尘眯眼。</p><p>母弱且病，饥饿交加，</p><p>寻一坎下，避风暂缓。</p><p>白狗通灵，遍历田野，</p><p>叼来一穗，献与母亲。</p><p>究竟畜生，性存报恩，</p><p>尚不知晓，人不食生。</p><p>夏末秋初，麦场分粮，</p><p>母亲受欺，昏厥在地。</p><p>邻里五奶，最为慈善，</p><p>招呼乡邻，抬母回家。</p><p>揉胸喂水，言语宽慰。</p><p>待母醒来，已过亥时。</p><p>屡屡桩桩，历历在目。</p><p>皆伤心史，不忍卒书。</p><p>苦难至极，佛祖慈悲。</p><p>丙辰冬月，暖阳临门</p><p>父亲单位，奖励优秀，</p><p>颁一指标，准迁落户。</p><p>母亲喜悦，携子前往。</p><p>农场种地，粮食丰足。</p><p>庚申孟秋，高考宣榜，</p><p>有幸及第，全家欢喜。</p><p>跨年复喜，寒舍生辉：</p><p>大妹二妹，招工录取。</p><p>乙丑之年，牛欢人乐</p><p>家庭经济，翻天覆地，</p><p>贫苦生活，于之终结。</p><p>子女养成，开花结果。</p><p>盂兰盆节，佛界法会。</p><p>晴天霹雳，山摇地动，</p><p>阿弥陀佛，带走母亲。</p><p>儿女悲泪，泪洒天穹</p><p>母子连心。心被掏空。</p><p>天若有心，雷声滚滚，</p><p>地若有心，黄泉翻涌。</p><p>之后十年，阴霾伴日</p><p>不时忧郁，时常悲涕。</p><p>悲涕盛时，倒床蒙睡，</p><p>嚎啕大哭，声波撕裂。</p><p>偶尔醉酒，悲哭加之，</p><p>夫人闻之，亦不言语。</p><p>轻手抚被，默默慰之，</p><p>知吾思母，任吾哭之。</p><p>思母久盛，得以解之：</p><p>吾母在世，勤俭持家，</p><p>良善真诚，不存欺心，</p><p>育子有方，德行高尚，</p><p>犹如菩萨，广结善缘，</p><p>白狗为证，普度众生。</p><p>吾母离世，菩萨圆寂，</p><p>功德圆满，自然归去。</p><p>吾辈当为，铭记母恩，</p><p>传承母爱，泽被子孙。</p><p>让母爱如黄河之水，奔流不息，</p><p>让母恩如泰山之重，永垂不朽。</p><p>吾母之灵，定会庇佑，</p><p>吾辈子孙，茁壮成长。</p><p>呜呼吾母，功德盖世。</p><p>养育五子，开花散叶：</p><p>黄河两岸，有其子嗣。</p><p>大江南北，有其血脉。</p><p>呜呼吾母，儿子悲屈。</p><p>苦难一生未曾享福一日。</p><p>呜呼吾母，儿子不孝，</p><p>养育成人未曾敬孝一时。</p><p>念兹在兹，此心不越。</p><p>养育深恩，春辉朝霭。</p><p>报之何时，精禽大海。</p><p>呜呼吾母，母终未死。</p><p>躯壳虽隳，灵则万古。</p><p>四十载无母日，儿女时常挂念，</p><p>音容笑貌当存期间，</p><p>八千里有母心，子孙永铭感恩，</p><p>德泽恩情应铭于心。</p><p>今日祭奠，尽此一觞。</p><p>后有言陈，与日俱长。</p><p>尚飨！</p>",
+  "notes": "<p>注：</p><p>幼丁：吾五岁之年</p><p>分粮分菜：生产队按人口或劳动工分分配</p><p>盂兰盆节：佛教法会，于每年农历七月十五日举行，</p><p>超度宗亲亡灵。供养三宝，回向父母身体健康、延年益寿。</p><p>穗：散落在包谷地的玉米</p><p>（距盂兰盆节55天。共1186字）</p>"
+    },
+    {
+      "id": 55,
+      "title": "《七律·慈恩颂》",
+      "category": "诗",
+      "date": "乙巳年仲夏",
+      "content": "<p>蓬门茹苦四十秋，</p><p>犬啮霜粮穗作酬。</p><p>分粟常遭宗族冷，</p><p>求医忍对北风遒。</p><p>虹收兵女天垂泪，</p><p>佛引盂兰月满楼。</p><p>今看黄河千顷浪，</p><p>皆含慈母线痕流。</p>",
+      "notes": "<p>注：诗中故事见《乙巳年祭母文》</p>"
+    },
+    {
+      "id": 56,
+      "title": "《菩萨蛮·忆母》",
+      "category": "词",
+      "date": "乙巳年仲夏",
+      "content": "<p>（婉约绵长风）</p><p>当年犬衔生穗处，北风裂骨斜阳暮。</p><p>灶冷数星霜，补衣针线长。</p><p>忽惊盂兰节，母化西天月。</p><p>夜夜照关山，黄河九曲间。</p>",
+      "notes": "<p>注：诗中故事见《乙巳年祭母文》</p>"
+    },
+{
+    "id": 56,
+    "title": "《乙巳年祭母文》",
+    "category": "文",
+    "date": "乙巳年仲夏",
+    "content": "<p>维公元二零二五年，岁次乙巳，盂兰盆节将至，谨以心香一瓣，泪墨千行，祭于慈母灵前：</p><p>呜呼吾母！骤然长逝，寿止四十有七。生育八子，存者其七：长兄早夭，六妹承祧于舅，七妹襁褓之中为军属所携，音讯渺茫。犹记舅父抱六妹时，母椎心泣血，蒙衾绝食三日；军属携七妹之日，滂沱雨歇现虹霓，而母泪尽声嘶，蜷卧炕隅水米不进。</p><p>吾母咯血持家，实抚五子。一男四女，吾居次列。劬劳育雏，痼疾暗生。父亲远赴酒钢谋生，母独扛门祚之重。同宗王氏，恃强凌寡：分粮克扣，工分薄算，长姊劳作最多而计分最少，稚子吞声，慈母饮恨。</p><p>朔风怒号之日，母携病子跋涉求医。深洼险渠，瘦影踉跄，白犬通灵，蹑影相随。至医馆，慈医陈氏见母囊空，免其五角欠资。归途风沙蔽目，母力竭倚坎，白犬竟衔生穗相献——畜类有情，怎知人间烟火？</p><p>麦浪翻金时节，分粮场上，母遭欺昏厥。幸得五奶恻隐，唤邻人舁归陋室，掐人中灌温水，至亥时方苏。此般桩桩血泪，实难尽述。</p><p>丙辰冬，父获单位嘉奖，举家迁农场。自此廪实仓满，庚申年吾金榜题名，越岁两妹招工入岗，乙丑时家道中兴。然正欲反哺，母竟溘然长往于盂兰盆节，佛号声中魂归净土。</p><p>母逝十载，悲潮难遏。或醉后嚎啕，或夜半呜咽，贤妻默抚衾被，容我恣情。今终悟得：慈母菩萨心肠，尘缘已了当乘莲西去。</p><p>吾母之德，山高水长：</p><p>如黄河奔涌，泽被后世；</p><p>似泰山巍峨，荫庇子孙。</p><p>大江南北，瓜瓞绵延；</p><p>四十寒暑，音容宛在。</p><p>哀哀吾母！</p><p>毕生茹苦，未享甘饴；</p><p>儿辈立身，未及奉养。</p><p>精卫难填思亲海，春晖永耀沐恩心。</p><p>伏惟尚飨！</p><p>注：</p><p>\"承祧\"：过继，继承香火</p><p>盂兰盆节：七月十五是佛教发会。《盂兰盆经》\"是佛弟子修孝顺者，应念念中常忆父母\"</p>"
+},
+{
+    "id": 57,
+    "title": "《舐犊吟》",
+    "category": "诗",
+    "date": "甲辰年季秋",
+    "content": "<p>军侣抱女去，虹霓雨后天。</p><p>大舅抱六妹，母泪透三年。</p><p>白犬衔生穗，医者免药钱。</p><p>最痛分粮日，昏厥晒场边。</p><p>忽闻落户讯，始见炊烟甜。</p><p>儿今跪黄土，犹见补衣肩。</p><p>黄河东到海，尽是哺乳恩。</p><p>注：</p><p>\"军侣抱女去\"指七妹被军属带走。</p><p>\"虹霓雨后天\"描述当时雨后出现彩虹的场景。</p><p>\"白犬衔生穗\"象征希望与生机。</p><p>\"分粮日昏厥\"反映母亲在分粮时因劳累而昏倒。</p><p>\"黄河东到海\"比喻母亲的恩情如黄河般绵延不绝。</p>"
+},
+{
+    "id": 58,
+    "title": "《金缕曲·盂兰盆节祭母》",
+    "category": "词",
+    "date": "癸卯年冬",
+    "content": "<p>此痛何时已？</p><p>任黄河、奔流到海，难淘悲髓。</p><p>四十七年荆棘路，八子存七余几？</p><p>最蚀骨、双妹别离事：</p><p>舅抱六儿虹贯雨，更军侣携幼狂风起。</p><p>母蜷炕，血泪涸。</p><p>白犬衔穗北风里。</p><p>记当年、克扣工分，晒场昏厥。</p><p>五奶掐人中救转，残月照茅檐水。</p><p>幸天眼、丙辰迁徙。</p><p>儿女成龙终反哺，</p><p>却盂兰惊雷、佛接西归矣！</p><p>十载泪，裂天地。</p><p>今悟菩提真如理：</p><p>原慈亲、菩萨化身，历劫度世。</p><p>万顷麦浪千重厦，尽是母德所庇。</p><p>看儿孙、南北开枝。</p><p>寸草难报三春晖，</p><p>纵精卫填海、恨无期！</p><p>焚此词，当纸钱祭。</p><p>注：</p><p>\"此痛何时已\"表达对母亲去世的无尽哀思。</p><p>\"黄河奔流到海\"比喻母亲的恩情如黄河般广阔。</p><p>\"四十七年荆棘路\"反映母亲一生的艰难。</p><p>\"双妹别离事\"指六妹和七妹的分离。</p><p>\"白犬衔穗北风里\"象征希望与坚韧。</p><p>\"五奶掐人中救转\"描述母亲在危难时刻得到的帮助。</p><p>\"丙辰迁徙\"指家庭搬迁到农场。</p><p>\"儿女成龙终反哺\"表达子女成年后未能尽孝的遗憾。</p><p>\"今悟菩提真如理\"表达对母亲菩萨心肠的顿悟。</p><p>\"焚此词，当纸钱祭\"以词代祭，表达对母亲的深切怀念。</p>"
+},
+    {
+        "id": 59,
+        "title": "《兰渝铁路珍珠链》",
+        "category": "诗",
+        "date": "乙巳年仲夏",
+        "content": "<p>第一珠·重庆北站<br>朝天门的汽笛泡进火锅油<br>长江与嘉陵江在此结拜<br>行李箱滚轮碾过的水洼<br>倒映出四十年前粮票的暗纹</p><p>第二珠·合川钓鱼城<br>悬崖上的箭垛仍在耳鸣<br>蒙哥汗的叹息长出青苔<br>钓鱼台下三江交汇处<br>有块圆石是母亲揉面的案板</p><p>第三珠·南充嘉陵江大桥<br>铁桥肋骨间卡着纤夫号子<br>白塔影子在波光里抄经<br>对岸晾晒的万匹绸缎<br>飘成大学录取通知书的衬里</p><p>第四珠·广元剑门关<br>李白叹过的鸟道缩成高铁线<br>崖壁石刻被时速250公里翻译<br>守关将士的铜盔坠入江中<br>变作幺妹耳环上的松绿石</p><p>第五珠·陇南官鹅沟<br>藏羌的碉楼是未拆的积木<br>雪水在保温杯里酿青稞酒<br>岩羊跃过的刹那<br>整条峡谷突然学父亲叹息</p><p>第六珠·定西黄土梯田<br>犁沟里的冰雹是去年未化的盐<br>旱柳枝在风中吼秦腔<br>地膜覆盖的垄上<br>有工龄买断时的指纹</p><p>第七珠·兰州黄河铁桥<br>羊皮筏子载走中山桥的锈斑<br>白塔山公园的旋转椅停摆<br>年轻时在此遗落的书包<br>正被浪花推成新的河心岛</p>"
+    },
+{
+    "id": 60,
+    "title": "《蜀道畅》VS《蜀道难》",
+    "category": "诗",
+    "date": "乙巳年仲夏",
+    "content": "<p>噫吁嚱！古云蜀道难，难于上青天，<br>而今蜀道畅，畅若行平川！<br>昔日鸟道萦绝壁，猿猱欲度愁攀援；<br>今朝天堑变通途，高铁如龙穿山峦。</p><p>忆往昔，剑门峥嵘而崔嵬，一夫当关万夫哀。<br>栈道钩连危石间，商旅踽踽心胆寒。<br>滟滪堆前浪拍天，舟楫难渡泪潸然。<br>蚕丛鱼凫开国远，崎岖古道岁月残。</p><p>看如今，银桥飞架云霭间，长虹卧波连蜀川。<br>雅西高速盘玉带，云端天路入画卷。<br>隧道逶迤穿层嶂，瞬间跨越万重山。<br>成都天府机场立，银鹰展翅翔宇寰。<br>中欧班列鸣笛去，贯通丝路连亚欧。<br>蜀江水碧蜀山青，高铁穿梭似流星。<br>朝发锦城霞光里，暮至长安灯火明。</p><p>昔时蜀道，阻绝了多少游子归乡梦；<br>今日通途，承载着万千希望向未来。<br>科技筑就通天路，蜀地繁荣展新颜。<br>蜀道之畅，畅在交通之便捷，<br>畅在经济之腾飞，<br>畅在民心之欢悦。</p><p>且放豪情云端上，笑看蜀道谱新章！<br>蜀道畅，畅四方，锦绣前程万里长！</p>"
+},
+    {
+        "id": 61,
+        "title": "《蜀道畅》",
+        "category": "诗",
+        "date": "甲辰年仲秋",
+        "content": "<p>噫吁嚱！通途惯星汉！<br>蜀道之畅，畅逾登云巅！<br>蚕丛鱼凫辟鸿蒙，天梯接霄秦塞关。<br>西当太白贯长虹，自驾如御风。<br>地崩山摧化遗韵，今朝铁龙游碧江。<br>上有六龙回日轨，下有云梯吻瀑泉。<br>黄鹤逍遥瞰霞色，猿猱嬉跃镜湖天。<br>青泥何盘盘，百步九折入岫烟。<br>隧道吞雾成仙窟，车流浮光星河间。<br>忽闻子规鸣空谷，清音散作玉珠圆。<br>剑阁朝霞熔金阙，秦岭夜壑灯不眠。<br>蜀道之畅，畅逾登云巅！<br>连峰接踵展画卷，倏然已忘日月迁！<br>枯松倒挂泻苍翠，飞湍瀑流喧玉渊。<br>玻璃栈道裁霞帔，笑揽银河落九川。<br>观景平台托沧海，万壑云涛掌心埋。<br>索道横簪青鬓侧，流光绣破千嶂颜<br>其美也若此，安得不醉倚青鸾！<br>剑阁峥嵘崔嵬立，一车划破万古烟。<br>所守皆是蓬莱客，遥指松云续断弦。<br>朝饮流云夕钓月，帐隐松涛，火燎天穹。<br>安栖山泉旁，舀来青涧水。<br>磨牙吮血，烹于星烬。<br>围炉笑染，半山胭脂 。<br>松风煮茶，犹如管弦。<br>花雨纷扑，助烤佳筵。<br>金城虽云乐，怎比抱月漱清泉？<br>蜀道之畅，畅逾登云巅！<br>邀友穿今古，侧身西望烟霞满天边！</p><p>注：<br>金城：兰州古称</p><p>2004年10月1日携夫人，自驾从嘉峪关至重庆。途径蜀道，感慨李白《蜀道难》而作。</p>"
+    },
+    {
+        "id": 62,
+        "title": "《沁园春·黄河铁桥怀古》",
+        "category": "词",
+        "date": "甲辰年仲秋",
+        "content": "<p>铁骨横波，寒星铸铆，浊浪吞秋。<br>任左公柳老，驼铃锈蚀；洋灰缝裂，岁月奔流。<br>曾渡征鞍，也栖胡雁，暗把河声锁铁喉。<br>斜阳里，看钢梁斑驳，犹刻庚戌。</p><p>当年德匠西来，算此物、竟成第一楼。<br>纵轮机震耳，难惊白塔；烽烟蔽日，未改金瓯。<br>今我重临，霓虹贯顶，车影如梭补旧愁。<br>凭栏处，有千年水鬼，笑数新舟。</p><p>注：<br>“庚戌”：桥成于宣统元年（1909年），干支纪年庚戌<br>“德匠”：德国泰来洋行承建，工程师满宝本、德罗等<br>“第一楼”：时称“天下黄河第一桥”<br>“水鬼”：黄河捞尸人旧称，此处化用为历史见证者</p>"
+    },
 
-
-            // 其他文章保持不变
+//更多文章
         ];
  
         // 当前文章索引 
@@ -801,6 +949,8 @@
         let searchTimer = null;
         let sidebarHidden = false; // 侧边栏隐藏状态
         let lastScrollTop = 0; // 上次滚动位置
+        let currentSearchKeyword = ''; // 当前搜索关键词
+        let activeFilter = 'all'; // 活跃的分类筛选
         
         // 初始化加载 
         document.addEventListener('DOMContentLoaded',  () => {
@@ -914,12 +1064,12 @@
                 </h2>
             `;
             
-            const articleList = document.getElementById('articleList');
-            articleList.parentElement.insertBefore(catalogHeader, articleList);
+            const filterControls = document.querySelector('.filter-container');
+            sidebar.insertBefore(catalogHeader, filterControls);
             
             // 当文章数超过5篇时自动折叠
             if (articles.length > 5) { 
-                articleList.style.display = 'none';
+                document.getElementById('articleList').style.display = 'none';
                 document.getElementById('fold-icon').textContent = '▶';
             }
         }
@@ -999,27 +1149,74 @@
             }
         }
         
+        // 应用筛选条件
+        function applyFilters() {
+            let filtered = [...articles];
+            
+            // 应用分类筛选
+            if (activeFilter === '其它') {
+                filtered = filtered.filter(article => article.category !== '诗' && article.category !== '词');
+            } else if (activeFilter !== 'all') {
+                filtered = filtered.filter(article => article.category === activeFilter);
+            }
+            
+            return filtered;
+        }
+        
+        // 筛选文章
+        function filterArticles() {
+            const selectedValue = document.getElementById('categoryFilter').value;
+            if (selectedValue) { // 确保不是占位选项
+                activeFilter = selectedValue;
+                renderArticleList();
+                
+                // 如果当前文章不在筛选结果中，加载筛选后的第一篇文章
+                const filteredArticles = applyFilters();
+                if (filteredArticles.length > 0 && !filteredArticles.includes(articles[currentArticleIndex])) {
+                    loadArticle(0);
+                }
+            }
+        }
+        
         // 渲染目录 
         function renderArticleList() {
+            const filteredArticles = applyFilters();
             const listContainer = document.getElementById('articleList');  
-            listContainer.innerHTML  = articles.map(article  => `
+            listContainer.innerHTML  = filteredArticles.map(article  => `
                 <li>
-                    <a href="#" onclick="loadArticle(${articles.indexOf(article)})">  
+                    <a href="#" onclick="loadArticle(${filteredArticles.indexOf(article)})">  
                         <span class="article-number">${article.id}.</span>  
                         ${article.title}  
                         <small>(${article.category})</small>  
                     </a>
                 </li>
             `).join('');
+            
+            // 如果筛选结果为空
+            if (filteredArticles.length === 0) {
+                listContainer.innerHTML = `
+                    <li style="text-align: center; padding: 15px; color: #8b4513;">
+                        没有找到符合条件的文章
+                    </li>
+                `;
+            }
         }
         
         // 加载文章 
         function loadArticle(index) {
+            const filteredArticles = applyFilters();
+            
+            // 如果没有筛选结果，不加载任何文章
+            if (filteredArticles.length === 0) return;
+            
+            // 确保索引在有效范围内
+            if (index < 0 || index >= filteredArticles.length) return;
+            
             document.getElementById('articleText').innerHTML  = '<div class="loading">🕯️ 文章加载中...</div>';
             
             setTimeout(() => {
-                currentArticleIndex = index;
-                const article = articles[index];
+                const article = filteredArticles[index];
+                currentArticleIndex = articles.indexOf(article); // 保存原始索引
                 
                 document.getElementById('articleTitle').textContent  = article.title;  
                 document.getElementById('articleMeta').innerHTML  = `
@@ -1027,7 +1224,21 @@
                     <span>日期：${article.date}</span>  
                     <span>编号：${article.id}</span>  
                 `;
-                document.getElementById('articleText').innerHTML  = article.content;  
+                
+                // 渲染文章内容并处理缩进
+                let content = article.content;
+                
+                // 处理段落缩进（非诗非词）
+                if (article.category !== '诗' && article.category !== '词') {
+                    content = content.replace(/<p>/g, '<p class="paragraph-indent">');
+                }
+                
+                // 应用关键词高亮
+                if (currentSearchKeyword) {
+                    content = highlightContent(content, currentSearchKeyword);
+                }
+                
+                document.getElementById('articleText').innerHTML  = content;  
                 
                 updateNavButtons();
                 
@@ -1045,16 +1256,19 @@
         
         // 更新导航按钮 
         function updateNavButtons() {
+            const filteredArticles = applyFilters();
+            const currentFilteredIndex = filteredArticles.indexOf(articles[currentArticleIndex]);
+            
             const prevButtons = document.querySelectorAll('#prevArticle,  #prevArticleBottom, #mobilePrevArticle');
             const nextButtons = document.querySelectorAll('#nextArticle,  #nextArticleBottom, #mobileNextArticle');
             
             // 上一篇按钮 
             prevButtons.forEach(btn  => {
-                if (currentArticleIndex > 0) {
+                if (currentFilteredIndex > 0) {
                     btn.style.visibility  = 'visible';
                     btn.onclick  = (e) => {
                         e.preventDefault();  
-                        loadArticle(currentArticleIndex - 1);
+                        loadArticle(currentFilteredIndex - 1);
                     };
                 } else {
                     btn.style.visibility  = 'hidden';
@@ -1064,11 +1278,11 @@
             
             // 下一篇按钮 
             nextButtons.forEach(btn  => {
-                if (currentArticleIndex < articles.length  - 1) {
+                if (currentFilteredIndex < filteredArticles.length  - 1) {
                     btn.style.visibility  = 'visible';
                     btn.onclick  = (e) => {
                         e.preventDefault();  
-                        loadArticle(currentArticleIndex + 1);
+                        loadArticle(currentFilteredIndex + 1);
                     };
                 } else {
                     btn.style.visibility  = 'hidden';
@@ -1079,11 +1293,11 @@
         
         // 搜索功能 
         function searchArticles() {
-            const keyword = document.getElementById('searchInput').value.trim().toLowerCase();  
+            currentSearchKeyword = document.getElementById('searchInput').value.trim().toLowerCase();  
             const filtered = articles.filter(article  => 
-                article.title.toLowerCase().includes(keyword)  || 
-                article.content.toLowerCase().includes(keyword)  ||
-                article.category.toLowerCase().includes(keyword)
+                article.title.toLowerCase().includes(currentSearchKeyword)  || 
+                article.content.toLowerCase().includes(currentSearchKeyword)  ||
+                article.category.toLowerCase().includes(currentSearchKeyword)
             );
             
             const listContainer = document.getElementById('articleList');  
@@ -1091,7 +1305,7 @@
                 <li>
                     <a href="#" onclick="loadArticle(${articles.indexOf(article)})">  
                         <span class="article-number">${article.id}.</span>  
-                        ${highlightKeyword(article.title,  keyword)}
+                        ${highlightKeyword(article.title,  currentSearchKeyword)}
                         <small>(${article.category})</small>  
                     </a>
                 </li>
@@ -1101,9 +1315,14 @@
             if (filtered.length === 0) {
                 listContainer.innerHTML = `
                     <li style="text-align: center; padding: 15px; color: #8b4513;">
-                        未找到包含"${keyword}"的文章
+                        未找到包含"${currentSearchKeyword}"的文章
                     </li>
                 `;
+            }
+            
+            // 如果有搜索结果，加载第一篇
+            if (filtered.length > 0) {
+                loadArticle(articles.indexOf(filtered[0]));
             }
         }
         
@@ -1116,12 +1335,29 @@
             );
         }
         
+        // 文章内容关键词高亮
+        function highlightContent(html, keyword) {
+            if (!keyword) return html;
+            return html.replace(
+                new RegExp(`(${keyword})`, 'gi'),
+                '<span class="highlight">$1</span>'
+            );
+        }
+        
         // 键盘导航 
         document.addEventListener('keydown',  (e) => {
-            if (e.key  === 'ArrowLeft' && currentArticleIndex > 0) {
-                loadArticle(currentArticleIndex - 1);
-            } else if (e.key  === 'ArrowRight' && currentArticleIndex < articles.length  - 1) {
-                loadArticle(currentArticleIndex + 1);
+            if (e.key  === 'ArrowLeft') {
+                const filteredArticles = applyFilters();
+                const currentFilteredIndex = filteredArticles.indexOf(articles[currentArticleIndex]);
+                if (currentFilteredIndex > 0) {
+                    loadArticle(currentFilteredIndex - 1);
+                }
+            } else if (e.key  === 'ArrowRight') {
+                const filteredArticles = applyFilters();
+                const currentFilteredIndex = filteredArticles.indexOf(articles[currentArticleIndex]);
+                if (currentFilteredIndex < filteredArticles.length - 1) {
+                    loadArticle(currentFilteredIndex + 1);
+                }
             }
         });
         
