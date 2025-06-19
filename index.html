@@ -24,89 +24,126 @@
             perspective: 1000px;
         }
         
-        /* 书册容器 - 增加移动端高度 */
         .book-cover {
             width: 90%;
             max-width: 800px;
-            min-height: 60vh; /* 新增：确保最小高度 */
+            min-height: 60vh;
             position: relative;
             transform-style: preserve-3d;
             transition: all 0.8s ease;
-            display: flex; /* 新增：弹性布局 */
-            align-items: center; /* 新增：垂直居中 */
+            display: flex;
+            align-items: center;
         }
         
-        /* 封面设计 - 增加内边距 */
         .front-cover {
             background: var(--paper-color);
             border: 1px solid #cdaa7d;
             box-shadow: 0 10px 25px var(--shadow-color);
-            padding: 4rem 2rem; /* 增大上下内边距 */
+            padding: 4rem 2rem;
             text-align: center;
             transform-origin: left center;
             backface-visibility: hidden;
             width: 100%;
         }
         
-        /* 标题组自适应 */
         .title-group {
             margin-bottom: 2.5rem;
             position: relative;
-            word-break: keep-all; /* 防止文字换行 */
+            word-break: keep-all;
         }
         
-        /* 智能字号系统 */
         .title-group h1 {
             color: var(--ink-color);
-            font-size: clamp(1.8rem, 6vw, 2.8rem); /* 智能缩放 */
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
             margin: 0 0 0.5rem;
-            letter-spacing: 0.3rem; /* 缩小字距适应长标题 */
+            letter-spacing: 0.3rem;
             text-shadow: 2px 2px 3px var(--shadow-color);
-            line-height: 1.3; /* 增加行高 */
+            line-height: 1.3;
         }
         
         .title-group::after {
             content: "";
             display: block;
-            width: clamp(100px, 30vw, 150px); /* 响应式宽度 */
+            width: clamp(100px, 30vw, 150px);
             height: 2px;
             background: linear-gradient(to right, transparent, var(--accent-color), transparent);
-            margin: 1.5rem auto; /* 增加间距 */
+            margin: 1.5rem auto;
         }
         
-        /* 阅读按钮增强 */
         .open-book {
             display: inline-block;
-            padding: 1.2rem 3rem; /* 增大按钮 */
+            padding: 1.2rem 3rem;
             background: var(--accent-color);
             color: white;
             border-radius: 3px;
             font-size: clamp(1rem, 4vw, 1.1rem);
             transition: all 0.3s;
-            margin-top: 2rem; /* 增加上边距 */
+            margin: 2rem 0 3rem;
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 6px var(--shadow-color);
-            width: auto; /* 取消固定宽度 */
-            min-width: 120px; /* 最小宽度 */
+            width: auto;
+            min-width: 120px;
+        }
+        
+        .open-book:hover {
+            background: var(--ink-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px var(--shadow-color);
+        }
+        
+        .copyright {
+            color: #8b4513;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            padding-top: 1.5rem;
+            position: relative;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .copyright::before {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #8b4513, transparent);
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .book-cover.opened  {
+            transform: rotateY(-150deg);
+            pointer-events: none;
         }
         
         @media (max-width: 768px) {
             .book-cover {
-                min-height: 70vh; /* 移动端更高 */
+                min-height: 70vh;
             }
             
             .front-cover {
-                padding: 3rem 1.5rem; /* 调整移动端内边距 */
+                padding: 3rem 1.5rem;
             }
             
             .title-group h1 {
-                letter-spacing: 0.2rem; /* 移动端字距微调 */
+                letter-spacing: 0.2rem;
             }
             
             .open-book {
                 padding: 1rem 2.5rem;
-                margin-top: 2.5rem; /* 移动端增加间距 */
+                margin: 2rem 0 2.5rem;
+            }
+            
+            .copyright {
+                font-size: 0.75rem;
+                padding-top: 1.2rem;
+            }
+            
+            .copyright::before {
+                width: 50px;
             }
         }
     </style>
@@ -119,6 +156,11 @@
                 <p>古典诗词与散文杂记</p>
             </div>
             <button class="open-book" onclick="navigateWithAnimation()">阅读</button>
+            
+            <div class="copyright">
+                © 2023-<script>document.write(new  Date().getFullYear())</script> 道玄<br>
+                版权所有·未经许可不得转载 
+            </div>
         </div>
     </div>
  
@@ -131,6 +173,14 @@
                 window.location.href  = "https://6948.kstore.space/dx/index1.html"; 
             }, 800);
         }
+        
+        // 点击任意处收起书卷（仅调试用）
+        document.addEventListener('click',  function(e) {
+            if(!e.target.closest('.open-book')  &&
+               document.getElementById('bookCover').classList.contains('opened'))  {
+                document.getElementById('bookCover').classList.remove('opened'); 
+            }
+        });
     </script>
 </body>
 </html>
