@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>道玄文集 - 扉页</title>
+    <title>道玄文集</title>
     <style>
-        /* 书卷风格基础 */
         :root {
             --paper-color: #f8f4e9;
             --ink-color: #5a3921;
@@ -23,96 +22,96 @@
             align-items: center;
             min-height: 100vh;
             perspective: 1000px;
-            overflow-x: hidden;
         }
         
-        /* 书册容器 */
+        /* 书册容器 - 增加移动端高度 */
         .book-cover {
             width: 90%;
             max-width: 800px;
-            height: auto;
+            min-height: 60vh; /* 新增：确保最小高度 */
             position: relative;
             transform-style: preserve-3d;
             transition: all 0.8s ease;
-            z-index: 10;
+            display: flex; /* 新增：弹性布局 */
+            align-items: center; /* 新增：垂直居中 */
         }
         
-        /* 封面设计 */
+        /* 封面设计 - 增加内边距 */
         .front-cover {
             background: var(--paper-color);
             border: 1px solid #cdaa7d;
             box-shadow: 0 10px 25px var(--shadow-color);
-            padding: 3rem 2rem;
+            padding: 4rem 2rem; /* 增大上下内边距 */
             text-align: center;
             transform-origin: left center;
             backface-visibility: hidden;
+            width: 100%;
         }
         
+        /* 标题组自适应 */
         .title-group {
             margin-bottom: 2.5rem;
             position: relative;
+            word-break: keep-all; /* 防止文字换行 */
         }
         
+        /* 智能字号系统 */
         .title-group h1 {
             color: var(--ink-color);
-            font-size: 2.8rem;
+            font-size: clamp(1.8rem, 6vw, 2.8rem); /* 智能缩放 */
             margin: 0 0 0.5rem;
-            letter-spacing: 0.5rem;
+            letter-spacing: 0.3rem; /* 缩小字距适应长标题 */
             text-shadow: 2px 2px 3px var(--shadow-color);
+            line-height: 1.3; /* 增加行高 */
         }
         
         .title-group::after {
             content: "";
             display: block;
-            width: 150px;
+            width: clamp(100px, 30vw, 150px); /* 响应式宽度 */
             height: 2px;
             background: linear-gradient(to right, transparent, var(--accent-color), transparent);
-            margin: 1rem auto;
+            margin: 1.5rem auto; /* 增加间距 */
         }
         
-        /* 阅读按钮 */
+        /* 阅读按钮增强 */
         .open-book {
             display: inline-block;
-            padding: 1rem 2.5rem;
+            padding: 1.2rem 3rem; /* 增大按钮 */
             background: var(--accent-color);
             color: white;
-            text-decoration: none;
             border-radius: 3px;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 4vw, 1.1rem);
             transition: all 0.3s;
-            margin-top: 1rem;
+            margin-top: 2rem; /* 增加上边距 */
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 6px var(--shadow-color);
+            width: auto; /* 取消固定宽度 */
+            min-width: 120px; /* 最小宽度 */
         }
         
-        .open-book:hover {
-            background: var(--ink-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px var(--shadow-color);
-        }
-        
-        /* 翻页动画 */
-        .book-cover.opened  {
-            transform: rotateY(-150deg);
-            pointer-events: none;
-        }
-        
-        /* 响应式设计 */
         @media (max-width: 768px) {
+            .book-cover {
+                min-height: 70vh; /* 移动端更高 */
+            }
+            
+            .front-cover {
+                padding: 3rem 1.5rem; /* 调整移动端内边距 */
+            }
+            
             .title-group h1 {
-                font-size: 2rem;
-                letter-spacing: 0.3rem;
+                letter-spacing: 0.2rem; /* 移动端字距微调 */
             }
             
             .open-book {
-                padding: 0.8rem 1.8rem;
+                padding: 1rem 2.5rem;
+                margin-top: 2.5rem; /* 移动端增加间距 */
             }
         }
     </style>
 </head>
 <body>
-    <!-- 书册封面 -->
     <div class="book-cover" id="bookCover">
         <div class="front-cover">
             <div class="title-group">
@@ -128,10 +127,9 @@
             const book = document.getElementById('bookCover'); 
             book.classList.add('opened'); 
             
-            // 在动画完成时跳转页面 
             setTimeout(() => {
                 window.location.href  = "https://6948.kstore.space/dx/index1.html"; 
-            }, 800); // 与CSS动画时间匹配 
+            }, 800);
         }
     </script>
 </body>
