@@ -3,136 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>道玄文集 - 首页</title>
+    <title>道玄文集 - 扉页</title>
     <style>
-        /* 保持原有风格 */
+        /* 书卷风格基础 */
+        :root {
+            --paper-color: #f8f4e9;
+            --ink-color: #5a3921;
+            --accent-color: #8b4513;
+            --shadow-color: rgba(0,0,0,0.1);
+        }
+        
         body {
-            font-family: "楷体", serif;
+            font-family: "楷体", "STKaiti", serif;
+            background: #e8e0d0;
             margin: 0;
             padding: 0;
-            background: #f8f4e9;
-            color: #333;
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            perspective: 1000px;
+            overflow-x: hidden;
         }
         
-        /* 封面容器 */
-        .cover-container {
+        /* 书册容器 */
+        .book-cover {
+            width: 90%;
             max-width: 800px;
-            width: 100%;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        
-        /* 文集标题 */
-        .collection-header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid #8b4513;
-            padding-bottom: 20px;
-        }
-        
-        .collection-header h1 {
-            color: #5a3921;
-            font-size: 2.5em;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
-            margin-top: 0;
-        }
-        
-        /* 封面图片 */
-        .cover-image {
-            max-width: 100%;
             height: auto;
-            margin: 30px 0;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.8s ease;
+            z-index: 10;
+        }
+        
+        /* 封面设计 */
+        .front-cover {
+            background: var(--paper-color);
             border: 1px solid #cdaa7d;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px var(--shadow-color);
+            padding: 3rem 2rem;
+            text-align: center;
+            transform-origin: left center;
+            backface-visibility: hidden;
         }
         
-        /* 导航按钮 */
-        .nav-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin: 30px 0;
-            align-items: center; /* 新增：使按钮居中 */
+        .title-group {
+            margin-bottom: 2.5rem;
+            position: relative;
         }
         
-        .nav-button {
-            display: inline-block; /* 改为inline-block使宽度自适应内容 */
-            padding: 15px 30px; /* 调整左右内边距 */
-            background: #8b4513;
+        .title-group h1 {
+            color: var(--ink-color);
+            font-size: 2.8rem;
+            margin: 0 0 0.5rem;
+            letter-spacing: 0.5rem;
+            text-shadow: 2px 2px 3px var(--shadow-color);
+        }
+        
+        .title-group::after {
+            content: "";
+            display: block;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+            margin: 1rem auto;
+        }
+        
+        /* 阅读按钮 */
+        .open-book {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent-color);
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 3px;
+            font-size: 1.1rem;
             transition: all 0.3s;
-            font-size: 1.1em;
-            min-width: 200px; /* 设置最小宽度保持统一 */
-            box-sizing: border-box;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px var(--shadow-color);
         }
         
-        .nav-button:hover {
-            background: #5a3921;
+        .open-book:hover {
+            background: var(--ink-color);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 8px var(--shadow-color);
         }
         
-        /* 版权信息 */
-        .copyright {
-            margin-top: 40px;
-            color: #5a3921; /* 改为深色更醒目 */
-            font-size: 1em; /* 调大字号 */
-            text-align: center;
-            border-top: 1px dashed #cdaa7d;
-            padding-top: 20px;
-            line-height: 1.6;
+        /* 翻页动画 */
+        .book-cover.opened  {
+            transform: rotateY(-150deg);
+            pointer-events: none;
         }
         
         /* 响应式设计 */
-        @media screen and (max-width: 768px) {
-            .collection-header h1 {
-                font-size: 1.8em;
+        @media (max-width: 768px) {
+            .title-group h1 {
+                font-size: 2rem;
+                letter-spacing: 0.3rem;
             }
             
-            .nav-buttons {
-                margin: 20px 0;
-            }
-            
-            .nav-button {
-                padding: 12px 20px;
-                font-size: 1em;
-                min-width: 180px;
-            }
-            
-            .copyright {
-                font-size: 0.95em; /* 移动端稍小但依然清晰 */
+            .open-book {
+                padding: 0.8rem 1.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="cover-container">
-        <header class="collection-header">
-            <h1 lang="zh">道玄文集</h1>
-            <p>古典诗词与散文杂记</p>
-        </header>
-        
-        <!-- 您可以在此处添加封面图片 -->
-        <!-- <img src="cover.jpg"  alt="道玄文集封面" class="cover-image"> -->
-        
-        <div class="nav-buttons">
-            <a href="https://6948.kstore.space/dx/index1.html"  class="nav-button">首页</a>
-            <a href="https://6948.kstore.space/dx/index2.html"  class="nav-button">第二页</a>
-            <a href="https://6948.kstore.space/dx/index3.html"  class="nav-button">第三页</a>
-            <a href="https://6948.kstore.space/dx/jianjie.html"  class="nav-button">关于作者与版权</a>
-        </div>
-        
-        <div class="copyright">
-            <p>© 2025 道玄文集 版权所有</p>
-            <p>本网站内容托管于GitHub Pages，主要文章内容位于国内凯速网</p>
+    <!-- 书册封面 -->
+    <div class="book-cover" id="bookCover">
+        <div class="front-cover">
+            <div class="title-group">
+                <h1>道玄文集</h1>
+                <p>古典诗词与散文杂记</p>
+            </div>
+            <button class="open-book" onclick="navigateWithAnimation()">阅读</button>
         </div>
     </div>
+ 
+    <script>
+        function navigateWithAnimation() {
+            const book = document.getElementById('bookCover'); 
+            book.classList.add('opened'); 
+            
+            // 在动画完成时跳转页面 
+            setTimeout(() => {
+                window.location.href  = "https://6948.kstore.space/dx/index1.html"; 
+            }, 800); // 与CSS动画时间匹配 
+        }
+    </script>
 </body>
 </html>
