@@ -167,22 +167,16 @@
     </div>
  
     <script>
+        // 自动注册PWA功能 
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js?ver=1.0'); 
+        }
         function navigateWithAnimation() {
-            const book = document.getElementById('bookCover');  
-            book.classList.add('opened');  
-            
+            document.getElementById('bookCover').classList.add('opened'); 
             setTimeout(() => {
-                window.location.href   = "https://6948.kstore.space/dx/index1.html";  
+                window.location.href  = "https://6948.kstore.space/dx/index1.html"; 
             }, 800);
         }
-        
-        // 点击任意处收起书卷（仅调试用）
-        document.addEventListener('click',   function(e) {
-            if(!e.target.closest('.open-book')   &&
-               document.getElementById('bookCover').classList.contains('opened'))   {
-                document.getElementById('bookCover').classList.remove('opened');  
-            }
-        });
     </script>
 </body>
 </html>

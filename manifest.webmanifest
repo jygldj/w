@@ -1,0 +1,13 @@
+{
+  "name": "道玄文集",
+  "short_name": "道玄文集",
+  "start_url": "/w/index.html", 
+  "display": "standalone",
+  "background_color": "#f8f4e9",
+  "theme_color": "#8b4513",
+  "icons": [{
+    "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'  viewBox='0 0 512 512'><rect width='512' height='512' fill='%23f8f4e9'/><text x='256' y='280' font-family='楷体' font-size='180' fill='%235a3921' text-anchor='middle'>道玄</text></svg>",
+    "sizes": "512x512",
+    "type": "image/svg+xml"
+  }]
+}
