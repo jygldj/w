@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="description" content="道玄文集 - 古典诗词与散文杂记">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'  viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%235a3921'>📜</text></svg>">
+    <meta name="description" content="道玄文集 - 古典诗词与散文杂记">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'   viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%235a3921'>📜</text></svg>">
     <title>道玄文集</title>
     <style>
         :root {
-            --paper-color: #f8f4e9;
-            --ink-color: #5a3921;
-            --accent-color: #8b4513;
+            --paper-color: #E8F1F2;
+            --ink-color: #2E5E6E;
+            --accent-color: #3A7B8C;
             --shadow-color: rgba(0,0,0,0.1);
         }
         
         body {
             font-family: "楷体", "STKaiti", serif;
-            background: #e8e0d0;
+            background: #E8F1F2;
             margin: 0;
             padding: 0;
             display: flex;
@@ -39,7 +39,7 @@
         
         .front-cover {
             background: var(--paper-color);
-            border: 1px solid #cdaa7d;
+            border: 1px solid #A3C4D2;
             box-shadow: 0 10px 25px var(--shadow-color);
             padding: 4rem 2rem;
             text-align: center;
@@ -95,7 +95,7 @@
         }
         
         .copyright {
-            color: #8b4513;
+            color: var(--accent-color);
             font-size: 0.85rem;
             margin-top: 0.5rem;
             padding-top: 1.5rem;
@@ -109,14 +109,14 @@
             display: block;
             width: 80px;
             height: 1px;
-            background: linear-gradient(to right, transparent, #8b4513, transparent);
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
         }
         
-        .book-cover.opened  {
+        .book-cover.opened   {
             transform: rotateY(-150deg);
             pointer-events: none;
         }
@@ -160,7 +160,7 @@
             <button class="open-book" onclick="navigateWithAnimation()">阅读</button>
             
             <div class="copyright">
-                © 2023-<script>document.write(new  Date().getFullYear())</script> 道玄<br>
+                © 2023-<script>document.write(new   Date().getFullYear())</script> 道玄<br>
                 版权所有·未经许可不得转载 
             </div>
         </div>
@@ -168,19 +168,19 @@
  
     <script>
         function navigateWithAnimation() {
-            const book = document.getElementById('bookCover'); 
-            book.classList.add('opened'); 
+            const book = document.getElementById('bookCover');  
+            book.classList.add('opened');  
             
             setTimeout(() => {
-                window.location.href  = "https://6948.kstore.space/dx/index1.html"; 
+                window.location.href   = "https://6948.kstore.space/ckn/index1.html";  
             }, 800);
         }
         
         // 点击任意处收起书卷（仅调试用）
-        document.addEventListener('click',  function(e) {
-            if(!e.target.closest('.open-book')  &&
-               document.getElementById('bookCover').classList.contains('opened'))  {
-                document.getElementById('bookCover').classList.remove('opened'); 
+        document.addEventListener('click',   function(e) {
+            if(!e.target.closest('.open-book')   &&
+               document.getElementById('bookCover').classList.contains('opened'))   {
+                document.getElementById('bookCover').classList.remove('opened');  
             }
         });
     </script>
