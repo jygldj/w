@@ -167,16 +167,22 @@
     </div>
  
     <script>
-        // 自动注册PWA功能 
-        if('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js?ver=1.0'); 
+        // 优化版PWA注册（移除版本参数）
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('ServiceWorker注册成功:', reg.scope))
+                .catch(err => console.error('ServiceWorker注册失败:', err));
         }
-        function navigateWithAnimation() {
-            document.getElementById('bookCover').classList.add('opened'); 
+        
+        // 页面跳转动画（保持原有逻辑）
+        document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                window.location.href  = "https://6948.kstore.space/dx/feiye.html"; 
-            }, 800);
-        }
+                document.getElementById('bookCover').classList.add('opened');
+                setTimeout(() => {
+                    window.location.href = "https://6948.kstore.space/dx/feiye.html";
+                }, 800);
+            }, 3000); // 3秒后开始动画
+        });
     </script>
 </body>
 </html>
