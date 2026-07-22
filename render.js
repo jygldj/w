@@ -44,6 +44,15 @@
         var inNotes = false;
         var i, raw, s;
 
+        // 0) 保护正文中直接书写的 <img> 标签（旧版文章的插图写法）：
+        //    先做占位，全部渲染完成后原样还原，避免被文本转义成可见代码
+        var imgTags = [];
+        var bodyText = String(body || '').replace(/<img\b[^>]*>/gi, function (tag) {
+            imgTags.push(tag);
+            return '%%DXIMG' + (imgTags.length - 1) + '%%';
+        });
+        lines = bodyText.split('\n');
+
         // 1) 分离正文与注释（保持旧版行为：首个「注：」等标记起至文末视为注释）
         for (i = 0; i < lines.length; i++) {
             raw = lines[i];
@@ -103,6 +112,11 @@
             html += '<div class="annotation"><p>' + escapeHtml(noteType) + '：</p><p>' +
                     inline(escapeHtml(noteLines.join(' '))) + '</p></div>';
         }
+
+        // 4) 还原被保护的 <img> 标签（见步骤 0）
+        html = html.replace(/%%DXIMG(\d+)%%/g, function (_, idx) {
+            return imgTags[parseInt(idx, 10)];
+        });
 
         return html || '<p>（本文暂无正文）</p>';
     }
