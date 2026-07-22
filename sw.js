@@ -2,11 +2,14 @@
  * 道玄文集 · Service Worker（sw.js）
  * 作用：离线缓存与访问加速。
  *   - 首次成功打开后，页面骨架与文章数据全部存入本地缓存；
- *   - 之后访问一律"缓存优先"：毫秒级打开，网络卡顿/断网也能阅读；
- *   - 后台静默拉取最新版本，内容有更新时通知页面提示读者刷新。
+ *   - 页面与文章数据：网络优先 + 3 秒超时竞速——刷新即见新内容，
+ *     网络卡顿/断网时 3 秒内回退缓存，保证永远可打开；
+ *   - 样式/脚本/图片：缓存优先 + 后台静默更新，秒开省流量；
+ *   - 后台检测到内容更新时，通知页面提示读者刷新。
  * 兼容性：不支持 Service Worker 的浏览器自动静默跳过，不影响正常访问。
  */
-var CACHE = 'dxwj-v1';
+var CACHE = 'dxwj-v2';
+var RACE_TIMEOUT = 3000;
 
 /* 预缓存清单：网站骨架与文章数据（相对 sw.js 所在目录） */
 var CORE = [
@@ -53,10 +56,37 @@ function notifyUpdate(req) {
     });
 }
 
-/* 缓存优先 + 后台更新（SWR）。
- * 有缓存：立即返回缓存，后台拉新——拉到的内容与缓存不一致才写入并通知；
- * 无缓存：走网络，成功后写入缓存；网络失败则尽力回退缓存。 */
-function swr(req) {
+/* 网络优先 + 超时竞速（用于页面与文章数据）：
+ * 网络在 RACE_TIMEOUT 内完成 → 用新内容并写入缓存；
+ * 超时 → 回退缓存（缓存也没有则继续等网络）；
+ * 网络失败 → 回退缓存。 */
+function raceNetworkFirst(req) {
+    var net = fetch(new Request(req.url, { cache: 'no-cache' })).then(function (res) {
+        if (res && res.status === 200) {
+            var copy = res.clone();
+            caches.open(CACHE).then(function (c) { c.put(req, copy); });
+        }
+        return res;
+    }).catch(function () { return null; });
+
+    var cache = new Promise(function (resolve) {
+        setTimeout(function () {
+            caches.match(req).then(function (hit) { resolve(hit || null); });
+        }, RACE_TIMEOUT);
+    });
+
+    return Promise.race([net, cache]).then(function (winner) {
+        if (winner) return winner;
+        return net.then(function (res) {
+            if (res) return res;
+            return caches.match(req);
+        });
+    });
+}
+
+/* 缓存优先 + 后台更新（用于样式/脚本/图片）：
+ * 有缓存立即返回，后台拉新——内容有变化才写入并通知。 */
+function cacheFirstSWR(req) {
     return caches.match(req).then(function (hit) {
         var fetched = fetch(req).then(function (res) {
             if (!res || res.status !== 200 || res.type === 'opaque') return res;
@@ -86,5 +116,14 @@ self.addEventListener('fetch', function (e) {
     if (req.method !== 'GET') return;
     // 只接管本站资源；百度统计等外部请求直接放行
     if (!req.url.startsWith(self.location.origin)) return;
-    e.respondWith(swr(req));
+
+    var p = new URL(req.url).pathname;
+    var isPage = /\/$/.test(p) || /\.html$/.test(p);
+    var isData = /articles\.js$/.test(p);
+
+    if (isPage || isData) {
+        e.respondWith(raceNetworkFirst(req));
+    } else {
+        e.respondWith(cacheFirstSWR(req));
+    }
 });
