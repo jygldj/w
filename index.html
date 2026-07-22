@@ -40,9 +40,9 @@
     </div>
  
     <script>
-        // PWA支持（sw.js 未部署时静默跳过，避免控制台报错）
-        if('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js?ver=1.0').catch(function(){});
+        // 离线缓存（Service Worker）：成功打开一次后，网络卡顿/断网也能进入文集
+        if('serviceWorker' in navigator && location.protocol !== 'file:') {
+            navigator.serviceWorker.register('sw.js').catch(function(){});
         }
         
         // 翻页动画导航 

@@ -772,6 +772,20 @@
         // 阅读工具条：夜间模式 / 字号调节
         DXTheme.initTools();
 
+        // 离线缓存（Service Worker）：成功打开一次后，网络卡顿/断网也能阅读
+        if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+            navigator.serviceWorker.register('sw.js').catch(function(){});
+            let updateToastTimer = null;
+            navigator.serviceWorker.addEventListener('message', function(e) {
+                if (e.data && e.data.type === 'dx-update-available') {
+                    clearTimeout(updateToastTimer);
+                    updateToastTimer = setTimeout(function() {
+                        DXTheme.toast('📄 网站内容有更新，刷新页面即可查看最新文章');
+                    }, 1500);
+                }
+            });
+        }
+
         document.getElementById('searchInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
