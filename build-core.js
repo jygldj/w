@@ -91,10 +91,16 @@
             issues.push({ level: 'warn', file: filename, message: '正文为空' });
         }
 
-        var m = filename.match(/^(\d+)/);
+        // 提取编号前先剥离不可见字符（零宽空格等）与首尾空白，
+        // 防止从微信/网页粘贴文字命名的文件编号读取失败
+        var cleanName = filename.replace(/[​-‍﻿⁠]/g, '').trim();
+        var m = cleanName.match(/^(\d+)/);
         var fileNo = m ? parseInt(m[1], 10) : null;
         if (fileNo === null) {
             issues.push({ level: 'info', file: filename, message: '文件名未以数字编号开头（建议形如「042-文章名.md」），不影响发布' });
+        }
+        if (/[​-‍﻿⁠]/.test(filename)) {
+            issues.push({ level: 'info', file: filename, message: '文件名里混入了看不见的字符（多因从微信/网页复制文字后直接粘贴为文件名）。不影响发布，建议有空时重命名清理' });
         }
 
         return {
@@ -148,7 +154,7 @@
                 if (!seen[i]) missing.push(i);
             }
             if (missing.length > 0 && missing.length <= 50) {
-                issues.push({ level: 'info', file: '', message: '编号不连续（缺少：' + missing.join('、') + '），不影响发布，仅供参考' });
+                issues.push({ level: 'info', file: '', message: '编号不连续（缺少：' + missing.join('、') + '），不影响发布。若这些文件其实已在 articles 文件夹里，说明它们是在点击「开始更新」之后才放入的——重新点一次即可' });
             }
         }
 
